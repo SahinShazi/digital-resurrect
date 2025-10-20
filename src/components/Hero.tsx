@@ -1,6 +1,6 @@
 import { Github, Linkedin, Youtube, Twitter, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/profile-photo.jpg";
 
 const Hero = () => {
   const socialLinks = [
