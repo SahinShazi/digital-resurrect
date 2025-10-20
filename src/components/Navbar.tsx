@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +39,11 @@ const Navbar = () => {
             className="flex items-center gap-3 group"
             onClick={() => setIsOpen(false)}
           >
-            <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-white font-bold text-xl transition-transform group-hover:scale-110">
-              SE
-            </div>
+            <img 
+              src={logo} 
+              alt="Sahin Enam" 
+              className="h-10 md:h-12 transition-transform group-hover:scale-105"
+            />
           </a>
 
           {/* Desktop Navigation */}

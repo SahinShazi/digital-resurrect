@@ -1,3 +1,5 @@
+import profilePhoto from "@/assets/profile-photo.jpg";
+
 const About = () => {
   const stats = [
     { number: "5+", label: "Years Experience" },
@@ -17,31 +19,46 @@ const About = () => {
         </div>
 
         {/* Content */}
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-6 mb-12">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">
-                Professional Web Developer
-              </h3>
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
+            {/* Profile Photo */}
+            <div className="order-2 md:order-1">
+              <div className="relative w-full max-w-md mx-auto">
+                <img 
+                  src={profilePhoto} 
+                  alt="Sahin Enam" 
+                  className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary/10 to-transparent" />
+              </div>
             </div>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              Hello! I'm Sahin Enam, a passionate Full Stack Web Developer with over 5 years of experience
-              creating digital solutions that make a difference. I specialize in building scalable web applications
-              using modern technologies like React, Node.js, and MongoDB.
-            </p>
+            {/* Text Content */}
+            <div className="space-y-6 order-1 md:order-2">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">
+                  Professional Web Developer
+                </h3>
+              </div>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              My journey in web development started with a curiosity about how websites work, and it has
-              evolved into a career where I get to solve complex problems and create user-friendly experiences
-              every day. I believe in writing clean, maintainable code and staying up-to-date with the latest
-              industry trends.
-            </p>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                Hello! I'm Sahin Enam, a passionate Full Stack Web Developer with over 5 years of experience
+                creating digital solutions that make a difference. I specialize in building scalable web applications
+                using modern technologies like React, Node.js, and MongoDB.
+              </p>
 
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source
-              projects, or sharing my knowledge with the developer community.
-            </p>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                My journey in web development started with a curiosity about how websites work, and it has
+                evolved into a career where I get to solve complex problems and create user-friendly experiences
+                every day. I believe in writing clean, maintainable code and staying up-to-date with the latest
+                industry trends.
+              </p>
+
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source
+                projects, or sharing my knowledge with the developer community.
+              </p>
+            </div>
           </div>
 
           {/* Stats */}
