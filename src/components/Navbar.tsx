@@ -42,7 +42,7 @@ const Navbar = () => {
             <img 
               src={logo} 
               alt="Sahin Enam" 
-              className="h-10 md:h-12 transition-transform group-hover:scale-105"
+              className="h-8 md:h-10 w-auto transition-transform group-hover:scale-105"
             />
           </a>
 
