@@ -6,7 +6,6 @@ const Hero = () => {
   const socialLinks = [
     { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
     { icon: Linkedin, href: "https://www.linkedin.com/in/sahin-shazi", label: "LinkedIn" },
-    { icon: Youtube, href: "https://youtube.com/@sahintechnology", label: "YouTube" },
     { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
   ];
 
