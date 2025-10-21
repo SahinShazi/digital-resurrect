@@ -108,7 +108,7 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="John Doe"
+                  placeholder="Name"
                   required
                   className="h-12"
                 />
