@@ -1,56 +1,34 @@
+import { useState, useEffect } from "react";
 import { ExternalLink, Github } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  technologies: string[];
+  live_link: string | null;
+  github_link: string | null;
+}
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "E-Commerce Platform",
-      description: "A full-featured e-commerce platform with cart, checkout, and payment integration built with React and Node.js.",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates and team features using WebSocket.",
-      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80",
-      technologies: ["React", "TypeScript", "Firebase"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Portfolio Website",
-      description: "A modern, responsive portfolio website showcasing creative projects with smooth animations and interactions.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-      technologies: ["React", "Tailwind CSS", "Framer Motion"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Weather Dashboard",
-      description: "A beautiful weather application with location-based forecasts and interactive charts using weather APIs.",
-      image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80",
-      technologies: ["React", "Chart.js", "OpenWeather API"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Social Media App",
-      description: "A social networking platform with posts, comments, likes, and real-time notifications.",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
-      technologies: ["React", "Express", "PostgreSQL"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Blog CMS",
-      description: "A content management system for blogs with markdown support, SEO optimization, and analytics.",
-      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-      technologies: ["Next.js", "MongoDB", "TailwindCSS"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-  ];
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    const { data } = await supabase
+      .from('projects')
+      .select('*')
+      .order('display_order');
+    
+    if (data) {
+      setProjects(data);
+    }
+  };
 
   return (
     <section id="projects" className="py-20 md:py-28 bg-white">
@@ -67,57 +45,73 @@ const Projects = () => {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <div
-              key={index}
-              className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-border hover:-translate-y-2 hover:shadow-2xl transition-all"
-            >
-              {/* Image */}
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-accent/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                  <a
-                    href={project.liveLink}
-                    className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary hover:scale-110 transition-transform"
-                    aria-label="View live project"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                  </a>
-                  <a
-                    href={project.githubLink}
-                    className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary hover:scale-110 transition-transform"
-                    aria-label="View on GitHub"
-                  >
-                    <Github className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-4 line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 text-xs font-medium gradient-primary text-white rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+          {projects.length === 0 ? (
+            <div className="col-span-full text-center py-12 text-muted-foreground">
+              No projects to display yet. Add some in the admin panel!
             </div>
-          ))}
+          ) : (
+            projects.map((project) => (
+              <div
+                key={project.id}
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-border hover:-translate-y-2 hover:shadow-2xl transition-all"
+              >
+                {/* Image */}
+                {project.image && (
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-accent/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                      {project.live_link && (
+                        <a
+                          href={project.live_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary hover:scale-110 transition-transform"
+                          aria-label="View live project"
+                        >
+                          <ExternalLink className="w-5 h-5" />
+                        </a>
+                      )}
+                      {project.github_link && (
+                        <a
+                          href={project.github_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary hover:scale-110 transition-transform"
+                          aria-label="View on GitHub"
+                        >
+                          <Github className="w-5 h-5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4 line-clamp-3">
+                    {project.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 text-xs font-medium gradient-primary text-white rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>

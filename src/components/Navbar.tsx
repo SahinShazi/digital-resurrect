@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,6 +60,14 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                Admin Panel
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -91,6 +102,15 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="block py-2 px-4 rounded-lg text-foreground font-medium hover:bg-secondary hover:text-primary transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Admin Panel
+            </Link>
+          )}
         </div>
       </div>
     </nav>
