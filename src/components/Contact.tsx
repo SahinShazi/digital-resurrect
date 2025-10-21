@@ -38,12 +38,12 @@ const Contact = () => {
       icon: Phone,
       label: "Phone",
       value: "+8801838040041",
-      href: "tel:+8801838040041",
+      href: "tel:01838040041",
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "San Francisco, CA",
+      value: "Dhaka, Bangladesh",
       href: "#",
     },
   ];
