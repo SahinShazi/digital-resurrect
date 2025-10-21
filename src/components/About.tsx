@@ -1,37 +1,10 @@
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
-interface AboutData {
-  bio_text: string;
-  profile_image: string | null;
-  years_experience: number;
-  projects_completed: number;
-  happy_clients: number;
-}
-
 const About = () => {
-  const [aboutData, setAboutData] = useState<AboutData | null>(null);
-
-  useEffect(() => {
-    fetchAbout();
-  }, []);
-
-  const fetchAbout = async () => {
-    const { data } = await supabase
-      .from('about_section')
-      .select('*')
-      .maybeSingle();
-    
-    if (data) {
-      setAboutData(data);
-    }
-  };
-
   const stats = [
-    { number: `${aboutData?.years_experience || 0}+`, label: "Years Experience" },
-    { number: `${aboutData?.projects_completed || 0}+`, label: "Projects Completed" },
-    { number: `${aboutData?.happy_clients || 0}+`, label: "Happy Clients" },
+    { number: "5+", label: "Years Experience" },
+    { number: "50+", label: "Projects Completed" },
+    { number: "100+", label: "Happy Clients" },
   ];
 
   return (
@@ -52,7 +25,7 @@ const About = () => {
             <div className="order-2 md:order-1">
               <div className="relative w-full max-w-md mx-auto">
                 <img 
-                  src={aboutData?.profile_image || profilePhoto} 
+                  src={profilePhoto} 
                   alt="Sahin Enam" 
                   className="rounded-2xl shadow-2xl w-full h-auto object-cover"
                 />
@@ -68,31 +41,23 @@ const About = () => {
                 </h3>
               </div>
 
-              {aboutData?.bio_text ? (
-                <div className="text-muted-foreground text-base md:text-lg leading-relaxed whitespace-pre-line">
-                  {aboutData.bio_text}
-                </div>
-              ) : (
-                <>
-                  <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                    Hello! I'm Sahin Enam, a passionate Full Stack Web Developer with over 5 years of experience
-                    creating digital solutions that make a difference. I specialize in building scalable web applications
-                    using modern technologies like React, Node.js, and MongoDB.
-                  </p>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                Hello! I'm Sahin Enam, a passionate Full Stack Web Developer with over 5 years of experience
+                creating digital solutions that make a difference. I specialize in building scalable web applications
+                using modern technologies like React, Node.js, and MongoDB.
+              </p>
 
-                  <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                    My journey in web development started with a curiosity about how websites work, and it has
-                    evolved into a career where I get to solve complex problems and create user-friendly experiences
-                    every day. I believe in writing clean, maintainable code and staying up-to-date with the latest
-                    industry trends.
-                  </p>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                My journey in web development started with a curiosity about how websites work, and it has
+                evolved into a career where I get to solve complex problems and create user-friendly experiences
+                every day. I believe in writing clean, maintainable code and staying up-to-date with the latest
+                industry trends.
+              </p>
 
-                  <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                    When I'm not coding, you can find me exploring new technologies, contributing to open-source
-                    projects, or sharing my knowledge with the developer community.
-                  </p>
-                </>
-              )}
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source
+                projects, or sharing my knowledge with the developer community.
+              </p>
             </div>
           </div>
 
