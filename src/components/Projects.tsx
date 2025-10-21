@@ -3,14 +3,6 @@ import { ExternalLink, Github } from "lucide-react";
 const Projects = () => {
   const projects = [
     {
-      title: "E-Commerce Platform",
-      description: "A full-featured e-commerce platform with cart, checkout, and payment integration built with React and Node.js.",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
       title: "Task Management App",
       description: "A collaborative task management application with real-time updates and team features using WebSocket.",
       image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80",
@@ -25,31 +17,7 @@ const Projects = () => {
       technologies: ["React", "Tailwind CSS", "Framer Motion"],
       liveLink: "#",
       githubLink: "#",
-    },
-    {
-      title: "Weather Dashboard",
-      description: "A beautiful weather application with location-based forecasts and interactive charts using weather APIs.",
-      image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80",
-      technologies: ["React", "Chart.js", "OpenWeather API"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Social Media App",
-      description: "A social networking platform with posts, comments, likes, and real-time notifications.",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&q=80",
-      technologies: ["React", "Express", "PostgreSQL"],
-      liveLink: "#",
-      githubLink: "#",
-    },
-    {
-      title: "Blog CMS",
-      description: "A content management system for blogs with markdown support, SEO optimization, and analytics.",
-      image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-      technologies: ["Next.js", "MongoDB", "TailwindCSS"],
-      liveLink: "#",
-      githubLink: "#",
-    },
+    }
   ];
 
   return (
