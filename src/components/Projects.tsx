@@ -21,7 +21,7 @@ const Projects = () => {
     {
       title: "Stock Analyst AI Bot",
       description: "Your personal stock analyst. I provide AI-driven reports with charts and data. Just send a ticker to start.",
-      image: "https://i.ibb.co.com/SXGRVFgf/image-search-1761238009653.jpg",
+      image: "https://i.ibb.co.com/G4zhpNpD/image-search-1761238014116.png",
       technologies: ["Python"],
       liveLink: "https://t.me/assistant232_bot",
       githubLink: "https://github.com/SahinShazi/Stock-Analysis-Telegram-Bot.git",
