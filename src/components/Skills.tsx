@@ -16,18 +16,8 @@ const Skills = () => {
       percentage: 80,
     },
     {
-      name: "React",
-      icon: "fab fa-react",
-      percentage: 75,
-    },
-    {
-      name: "Node.js",
-      icon: "fab fa-node-js",
-      percentage: 70,
-    },
-    {
-      name: "MongoDB",
-      icon: "fas fa-database",
+      name: "Firebase",
+      icon: "fas fa-firebase",
       percentage: 65,
     },
   ];
