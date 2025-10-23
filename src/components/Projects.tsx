@@ -3,21 +3,21 @@ import { ExternalLink, Github } from "lucide-react";
 const Projects = () => {
   const projects = [
     {
+      title: "Portfolio Website",
+      description: "A modern, responsive portfolio website for Sahin Enam, a professional frontend developer. This website showcases skills, projects, and YouTube content with a beautiful, interactive design.",
+      image: "https://i.ibb.co.com/YTdrXy8n/image-search-1761235093085.png",
+      technologies: ["Vite", "Tailwind CSS", "shadcn-ui", "React"],
+      liveLink: "https://shahinenam.netlify.app",
+      githubLink: "https://github.com/SahinShazi/Portfolio-Website.git",
+    },
+{
       title: "Task Management App",
       description: "A collaborative task management application with real-time updates and team features using WebSocket.",
-      image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80",
-      technologies: ["React", "TypeScript", "Firebase"],
-      liveLink: "#",
-      githubLink: "#",
+      image: "https://i.ibb.co.com/ccYSSgnP/image-search-1761235778859.jpg",
+      technologies: ["Vite TypeScript React shadcn-ui Tailwind CSS"],
+      liveLink: "https://shahinenam.netlify.app",
+      githubLink: "https://github.com/SahinShazi/task-canvas-supa",
     },
-    {
-      title: "Portfolio Website",
-      description: "A modern, responsive portfolio website showcasing creative projects with smooth animations and interactions.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-      technologies: ["React", "Tailwind CSS", "Framer Motion"],
-      liveLink: "#",
-      githubLink: "#",
-    }
   ];
 
   return (
