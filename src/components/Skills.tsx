@@ -17,8 +17,8 @@ const Skills = () => {
     },
     {
       name: "Firebase",
-      icon: "https://www.flaticon.com/free-icon/database_1104982?term=database&page=1&position=10&origin=search&related_id=1104982",
-      percentage: 65,
+      icon: "fas fa-fire",
+      percentage: 74,
     },
     {
       name: "Python",
