@@ -14,7 +14,7 @@ const Projects = () => {
       title: "Task Management App",
       description: "A collaborative task management application with real-time updates and team features using WebSocket.",
       image: "https://i.ibb.co.com/ccYSSgnP/image-search-1761235778859.jpg",
-      technologies: ["Vite TypeScript React shadcn-ui Tailwind CSS"],
+      technologies: ["Vite", "TypeScript", "React", "shadcn-ui", "Tailwind CSS"],
       liveLink: "https://shahinenam.netlify.app",
       githubLink: "https://github.com/SahinShazi/task-canvas-supa",
     },
