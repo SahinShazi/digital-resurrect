@@ -26,7 +26,7 @@ const Skills = () => {
       percentage: 40,
     },
     {
-  name: "GitHub",
+  name: "Git & GitHub",
   icon: "fab fa-github",
   percentage: 100,
 }
