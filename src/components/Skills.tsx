@@ -20,6 +20,11 @@ const Skills = () => {
       icon: "fas fa-firebase",
       percentage: 65,
     },
+    {
+      name: "Python",
+      icon: "fab fa-python",
+      percentage: 40,
+    },
   ];
 
   return (
