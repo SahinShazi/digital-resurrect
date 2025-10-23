@@ -25,6 +25,14 @@ const Projects = () => {
       technologies: ["Python"],
       liveLink: "https://t.me/assistant232_bot",
       githubLink: "https://github.com/SahinShazi/Stock-Analysis-Telegram-Bot.git",
+    },
+    {
+      title: "AI Telegram Chatbot",
+      description: "A friendly, witty AI chatbot for Telegram powered by DeepSeek R1 through OpenRouter. Aurevix provides natural, human-like conversations right in your Telegram chats.",
+      image: "https://i.ibb.co.com/TDZPQbMH/image-search-1761239469737.png",
+      technologies: ["Python"],
+      liveLink: "https://t.me/aurevix_bot",
+      githubLink: "https://github.com/SahinShazi/Telegram-Chatbot-AI.git",
     }
   ];
 
