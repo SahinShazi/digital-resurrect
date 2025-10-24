@@ -3,7 +3,7 @@ import { Github, Linkedin, Youtube, Twitter, Heart } from "lucide-react";
 const Footer = () => {
   const socialLinks = [
     { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/sahin-shazi", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LinkedIn" },
     { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
   ];
 
