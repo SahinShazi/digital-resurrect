@@ -35,12 +35,6 @@ const Contact = () => {
       href: "mailto:sahin.enam10@gmail.com",
     },
     {
-      icon: Phone,
-      label: "Phone",
-      value: "+8801838040041",
-      href: "tel:01838040041",
-    },
-    {
       icon: MapPin,
       label: "Location",
       value: "Dhaka, Bangladesh",
