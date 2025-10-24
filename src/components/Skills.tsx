@@ -29,7 +29,12 @@ const Skills = () => {
   name: "Git & GitHub",
   icon: "fab fa-github",
   percentage: 100,
-}
+},
+{
+      name: "AI Automation",
+      icon: "fas fa-robot",
+      percentage: 50,
+    }
   ];
 
   return (
