@@ -1,8 +1,8 @@
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/banner.jpg";
 
 const About = () => {
   const stats = [
-    { number: "5+", label: "Years Experience" },
+    { number: "2+", label: "Years Experience" },
     { number: "50+", label: "Projects Completed" },
     { number: "100+", label: "Happy Clients" },
   ];
