@@ -43,7 +43,7 @@ const Skills = () => {
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-            My Technical Skills
+            Technical Skills
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Technologies I leverage to craft robust and beautiful web applications.
