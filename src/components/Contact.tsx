@@ -37,8 +37,8 @@ const Contact = () => {
     {
       icon: MapPin,
       label: "Location",
-      value: "Dhaka, Bangladesh",
-      href: "#",
+      value: "Barisal, Bangladesh",
+      href: "https://maps.app.goo.gl/VXr3hJekYW1v1mFu8",
     },
   ];
 
