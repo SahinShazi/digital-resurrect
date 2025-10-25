@@ -1,4 +1,4 @@
-import { Github, Linkedin, Youtube, Twitter, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Youtube, Twitter, ChevronDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/profile-photo.jpg";
 
@@ -76,6 +76,17 @@ const Hero = () => {
               className="bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-primary transition-all text-base font-semibold"
             >
               <a href="#contact">Get In Touch</a>
+            </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="bg-white/10 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-primary transition-all text-base font-semibold"
+            >
+              <a href="/resume.pdf" download="Resume.pdf">
+                <Download className="w-4 h-4 mr-2" />
+                Download Resume
+              </a>
             </Button>
           </div>
         </div>
