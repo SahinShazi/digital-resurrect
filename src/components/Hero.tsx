@@ -1,128 +1,151 @@
-import { Github, Linkedin, Twitter, ChevronDown, Download, ArrowRight } from "lucide-react";
+import { Github, Linkedin, Twitter, ArrowDown, Download, ArrowRight, Code2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/profile-photo.jpg";
+import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Hero = () => {
   const socialLinks = [
     { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam", label: "LinkedIn" },
     { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
   ];
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: `url(${heroBg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }}
+      className="relative min-h-screen flex items-center overflow-hidden bg-background"
     >
-      {/* Enhanced Overlay with better gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/95 via-background/90 to-primary/20 z-0" />
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-grid" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
+      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse-glow" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
       
-      {/* Animated gradient orbs - hidden on mobile for performance */}
-      <div className="hidden sm:block absolute top-20 left-10 w-48 md:w-72 h-48 md:h-72 bg-primary/30 rounded-full blur-3xl animate-pulse" />
-      <div className="hidden sm:block absolute bottom-20 right-10 w-64 md:w-96 h-64 md:h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
-
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto pt-24 pb-16 sm:py-20">
-        <div className="animate-fade-in-up space-y-5 sm:space-y-8">
-          {/* Greeting Badge */}
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-sm">
-            <span className="text-xl sm:text-2xl animate-wave">👋</span>
-            <span className="text-xs sm:text-sm font-medium text-foreground">Welcome to my portfolio</span>
-          </div>
-
-          {/* Main Heading */}
-          <div className="space-y-2 sm:space-y-4">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-              <span className="text-foreground">Hi, I'm </span>
-              <span className="block mt-1 sm:mt-2 gradient-text bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text">
-                Sahin Enam
+      {/* Main content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pt-28">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left content */}
+          <div className="order-2 lg:order-1 text-center lg:text-left">
+            {/* Status badge */}
+            <div className="animate-fade-in-up inline-flex items-center gap-2 px-4 py-2 rounded-full glass border-glow mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
               </span>
+              <span className="text-sm font-medium text-foreground/80">Available for work</span>
+            </div>
+            
+            {/* Main heading */}
+            <h1 className="animate-fade-in-up-delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display leading-tight mb-6">
+              <span className="text-foreground">Hi, I'm</span>
+              <br />
+              <span className="gradient-text text-glow">Sahin Enam</span>
             </h1>
             
-            <p className="text-lg sm:text-2xl md:text-3xl font-bold text-muted-foreground">
-              Frontend Developer
+            {/* Role */}
+            <div className="animate-fade-in-up-delay-2 flex items-center justify-center lg:justify-start gap-3 mb-6">
+              <Code2 className="w-6 h-6 text-primary" />
+              <span className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
+                Frontend Developer
+              </span>
+            </div>
+            
+            {/* Description */}
+            <p className="animate-fade-in-up-delay-3 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+              I craft beautiful, responsive web experiences with clean code and modern technologies. 
+              Passionate about creating digital products that make a difference.
             </p>
-          </div>
-
-          {/* Description */}
-          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl sm:max-w-2xl mx-auto leading-relaxed px-2">
-            I create exceptional digital experiences with clean code, modern design, 
-            and cutting-edge technologies.
-          </p>
-
-          {/* Social Links */}
-          <div className="flex justify-center gap-2 sm:gap-3 pt-2 sm:pt-4">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-card/50 backdrop-blur-sm border border-primary/20 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/20"
-                  aria-label={social.label}
-                >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:scale-110" />
+            
+            {/* CTA buttons */}
+            <div className="animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
+              <Button
+                asChild
+                size="lg"
+                className="group gradient-primary text-primary-foreground font-semibold px-8 py-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30"
+              >
+                <a href="#projects" className="flex items-center gap-2">
+                  View Projects
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
-              );
-            })}
+              </Button>
+              
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="border-2 border-border bg-card/50 hover:bg-card hover:border-primary/50 font-semibold px-8 py-6 rounded-xl transition-all duration-300"
+              >
+                <a href="/resume.pdf" download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
+                  <Download className="w-5 h-5" />
+                  Resume
+                </a>
+              </Button>
+            </div>
+            
+            {/* Social links */}
+            <div className="animate-fade-in-up-delay-3 flex gap-4 justify-center lg:justify-start">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group w-12 h-12 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110"
+                    aria-label={social.label}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap justify-center sm:gap-4 pt-2 sm:pt-4 px-2">
-            <Button
-              asChild
-              size="lg"
-              className="group gradient-primary text-white border-0 shadow-lg hover:shadow-2xl hover:shadow-primary/50 hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base font-semibold px-6 sm:px-8 py-5 sm:py-6 rounded-xl w-full sm:w-auto"
-            >
-              <a href="#projects" className="flex items-center justify-center gap-2">
-                View My Work
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
-            
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-2 border-primary/30 bg-background/50 backdrop-blur-sm hover:bg-primary/10 hover:border-primary transition-all duration-300 text-sm sm:text-base font-semibold px-6 sm:px-8 py-5 sm:py-6 rounded-xl hover:-translate-y-1 hover:shadow-lg w-full sm:w-auto"
-            >
-              <a href="#contact">Get In Touch</a>
-            </Button>
-            
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="border-2 border-primary/30 bg-background/50 backdrop-blur-sm hover:bg-primary/10 hover:border-primary transition-all duration-300 text-sm sm:text-base font-semibold px-6 sm:px-8 py-5 sm:py-6 rounded-xl hover:-translate-y-1 hover:shadow-lg w-full sm:w-auto"
-            >
-              <a href="/resume.pdf" download="Resume.pdf" className="flex items-center justify-center gap-2">
-                <Download className="w-4 h-4 sm:w-5 sm:h-5" />
-                Download Resume
-              </a>
-            </Button>
+          
+          {/* Right content - Profile */}
+          <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+            <div className="relative animate-fade-in-up">
+              {/* Decorative rings */}
+              <div className="absolute -inset-4 rounded-full border border-primary/20 animate-pulse-glow" />
+              <div className="absolute -inset-8 rounded-full border border-primary/10" />
+              <div className="absolute -inset-12 rounded-full border border-primary/5" />
+              
+              {/* Profile image container */}
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
+                <img
+                  src={profilePhoto}
+                  alt="Sahin Enam"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+              </div>
+              
+              {/* Floating badges */}
+              <div className="absolute -right-4 top-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-sm font-medium">2+ Years Exp</span>
+                </div>
+              </div>
+              
+              <div className="absolute -left-4 bottom-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg" style={{ animationDelay: '1s' }}>
+                <div className="flex items-center gap-2">
+                  <Code2 className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-medium">50+ Projects</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Scroll Indicator - hidden on very small screens */}
+      
+      {/* Scroll indicator */}
       <a
         href="#about"
-        className="hidden xs:flex absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 group"
-        aria-label="Scroll to about section"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
       >
-        <div className="flex flex-col items-center gap-1 sm:gap-2">
-          <span className="text-[10px] sm:text-xs text-muted-foreground font-medium">Scroll Down</span>
-          <div className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 border-primary/30 flex items-start justify-center p-1.5 sm:p-2">
-            <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 text-primary animate-bounce" />
-          </div>
+        <span className="text-xs font-medium">Scroll</span>
+        <div className="w-6 h-10 rounded-full border-2 border-current flex items-start justify-center p-2">
+          <ArrowDown className="w-3 h-3 animate-bounce" />
         </div>
       </a>
     </section>

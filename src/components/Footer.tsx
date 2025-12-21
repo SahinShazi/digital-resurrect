@@ -1,18 +1,32 @@
-import { Github, Linkedin, Youtube, Twitter, Heart } from "lucide-react";
+import { Github, Linkedin, Twitter, Heart, ArrowUp } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
     { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app", label: "LinkedIn" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam", label: "LinkedIn" },
     { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
   ];
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="bg-white border-t border-border py-12">
+    <footer className="relative py-12 border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Logo / Name */}
+          <div className="text-center md:text-left">
+            <a href="#home" className="text-2xl font-bold font-display gradient-text">
+              Sahin Enam
+            </a>
+            <p className="text-sm text-muted-foreground mt-1">
+              Frontend Developer
+            </p>
+          </div>
+
           {/* Social Links */}
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             {socialLinks.map((social) => {
               const Icon = social.icon;
               return (
@@ -21,27 +35,36 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border-2 border-border flex items-center justify-center text-muted-foreground hover:border-primary hover:text-primary transition-all hover:scale-110"
+                  className="w-10 h-10 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                   aria-label={social.label}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-5 h-5" />
                 </a>
               );
             })}
           </div>
 
           {/* Copyright */}
-          <div className="text-center text-sm text-muted-foreground">
-            <p className="flex items-center justify-center gap-1">
-              Made with <Heart className="w-4 h-4 text-red-500 fill-current" /> by{" "}
-              <span className="font-semibold gradient-text">Sahin Enam</span>
+          <div className="text-center md:text-right text-sm text-muted-foreground">
+            <p className="flex items-center justify-center md:justify-end gap-1">
+              Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> by{" "}
+              <span className="font-semibold text-foreground">Sahin Enam</span>
             </p>
-            <p className="mt-2">
+            <p className="mt-1">
               © {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
         </div>
       </div>
+
+      {/* Scroll to top */}
+      <button
+        onClick={scrollToTop}
+        className="fixed bottom-8 right-8 w-12 h-12 rounded-xl gradient-primary text-primary-foreground flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50"
+        aria-label="Scroll to top"
+      >
+        <ArrowUp className="w-5 h-5" />
+      </button>
     </footer>
   );
 };
