@@ -61,6 +61,7 @@ export default {
       fontFamily: {
         sans: ['Sora', 'system-ui', 'sans-serif'],
         display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        bangla: ['Hind Siliguri', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
