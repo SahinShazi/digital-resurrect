@@ -44,6 +44,45 @@ export type Database = {
         }
         Relationships: []
       }
+      experiences: {
+        Row: {
+          achievements: string[]
+          company: string
+          created_at: string | null
+          description: string
+          display_order: number
+          id: string
+          location: string
+          period: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          achievements?: string[]
+          company: string
+          created_at?: string | null
+          description?: string
+          display_order?: number
+          id?: string
+          location?: string
+          period?: string
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          achievements?: string[]
+          company?: string
+          created_at?: string | null
+          description?: string
+          display_order?: number
+          id?: string
+          location?: string
+          period?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
           created_at: string | null
