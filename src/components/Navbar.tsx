@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Languages } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -7,6 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { lang, setLang, t } = useLanguage();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,12 +20,12 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { href: "#home", label: t("nav.home") },
-    { href: "#about", label: t("nav.about") },
-    { href: "#skills", label: t("nav.skills") },
-    { href: "#experience", label: t("nav.experience") },
-    { href: "#projects", label: t("nav.projects") },
-    { href: "#contact", label: t("nav.contact") },
+    { href: "/", label: t("nav.home") },
+    { href: "/about", label: t("nav.about") },
+    { href: "/skills", label: t("nav.skills") },
+    { href: "/experience", label: t("nav.experience") },
+    { href: "/projects", label: t("nav.projects") },
+    { href: "/contact", label: t("nav.contact") },
   ];
 
   const toggleLang = () => setLang(lang === "en" ? "bn" : "en");
@@ -38,20 +40,24 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
-          <a href="#home" className="flex items-center gap-3 group" onClick={() => setIsOpen(false)}>
+          <Link to="/" className="flex items-center gap-3 group" onClick={() => setIsOpen(false)}>
             <img src={logo} alt="Sahin Enam" className="h-8 md:h-10 w-auto transition-transform group-hover:scale-105" />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
-                href={link.href}
-                className="relative px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary/50"
+                to={link.href}
+                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-secondary/50 ${
+                  location.pathname === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
 
             {/* Language Toggle */}
@@ -64,12 +70,12 @@ const Navbar = () => {
               {lang === "en" ? "বাং" : "EN"}
             </button>
 
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="ml-2 px-5 py-2 text-sm font-semibold gradient-primary text-primary-foreground rounded-lg hover:scale-105 transition-transform"
             >
               {t("nav.hireMe")}
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -96,22 +102,26 @@ const Navbar = () => {
       <div className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[400px]" : "max-h-0"}`}>
         <div className="px-4 py-4 space-y-2 glass-strong border-t border-border">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
-              className="block py-3 px-4 rounded-lg text-muted-foreground font-medium hover:bg-secondary hover:text-foreground transition-colors"
+              to={link.href}
+              className={`block py-3 px-4 rounded-lg font-medium transition-colors ${
+                location.pathname === link.href
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}
               onClick={() => setIsOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="block py-3 px-4 mt-4 text-center font-semibold gradient-primary text-primary-foreground rounded-lg"
             onClick={() => setIsOpen(false)}
           >
             {t("nav.hireMe")}
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
