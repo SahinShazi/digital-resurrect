@@ -1,9 +1,40 @@
+import { useRef, useCallback } from "react";
 import { Github, Linkedin, Twitter, Heart, ArrowUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+  const tapCountRef = useRef(0);
+  const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Secret gesture: double-tap then hold on the copyright year
+  const handlePointerDown = useCallback(() => {
+    tapCountRef.current += 1;
+
+    if (tapTimerRef.current) clearTimeout(tapTimerRef.current);
+
+    if (tapCountRef.current >= 2) {
+      // Double tap detected, now wait for hold (800ms)
+      holdTimerRef.current = setTimeout(() => {
+        navigate("/admin");
+        tapCountRef.current = 0;
+      }, 800);
+    }
+
+    tapTimerRef.current = setTimeout(() => {
+      tapCountRef.current = 0;
+    }, 500);
+  }, [navigate]);
+
+  const handlePointerUp = useCallback(() => {
+    if (holdTimerRef.current) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+  }, []);
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
@@ -37,7 +68,14 @@ const Footer = () => {
             <p className="flex items-center justify-center md:justify-end gap-1">
               {t("footer.madeWith")} <Heart className="w-4 h-4 text-red-500 fill-red-500" /> {t("footer.by")} <span className="font-semibold text-foreground">Sahin Enam</span>
             </p>
-            <p className="mt-1">© {new Date().getFullYear()} {t("footer.rights")}</p>
+            <p
+              className="mt-1 select-none cursor-default"
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
+              onPointerLeave={handlePointerUp}
+            >
+              © <span>{new Date().getFullYear()}</span> {t("footer.rights")}
+            </p>
           </div>
         </div>
       </div>
