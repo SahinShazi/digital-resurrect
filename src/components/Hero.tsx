@@ -1,5 +1,6 @@
 import { Github, Linkedin, Twitter, ArrowDown, Download, ArrowRight, Code2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -50,10 +51,10 @@ const Hero = () => {
 
             <div className="animate-fade-in-up-delay-3 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10">
               <Button asChild size="lg" className="group gradient-primary text-primary-foreground font-semibold px-8 py-6 rounded-xl hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/30">
-                <a href="#projects" className="flex items-center gap-2">
+                <Link to="/projects" className="flex items-center gap-2">
                   {t("hero.viewProjects")}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-2 border-border bg-card/50 hover:bg-card hover:border-primary/50 font-semibold px-8 py-6 rounded-xl transition-all duration-300">
                 <a href="/resume.pdf" download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
@@ -101,12 +102,12 @@ const Hero = () => {
         </div>
       </div>
 
-      <a href="#about" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+      <Link to="/about" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
         <span className="text-xs font-medium">{t("hero.scroll")}</span>
         <div className="w-6 h-10 rounded-full border-2 border-current flex items-start justify-center p-2">
           <ArrowDown className="w-3 h-3 animate-bounce" />
         </div>
-      </a>
+      </Link>
     </section>
   );
 };
