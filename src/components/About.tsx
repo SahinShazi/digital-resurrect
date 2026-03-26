@@ -1,4 +1,5 @@
 import { User, Briefcase, Users, ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/banner.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -45,10 +46,10 @@ const About = () => {
               <p>{t("about.p2")}</p>
               <p>{t("about.p3")}</p>
             </div>
-            <a href="#contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
+            <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
               {t("about.cta")}
               <ArrowUpRight className="w-5 h-5" />
-            </a>
+            </Link>
           </div>
         </div>
 
