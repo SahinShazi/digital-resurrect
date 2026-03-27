@@ -1,17 +1,40 @@
-import { Code2, Database, Flame, GitBranch, Bot, Globe } from "lucide-react";
+import { Code2, Database, Flame, GitBranch, Bot, Globe, LucideIcon } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+
+const iconMap: Record<string, LucideIcon> = {
+  Globe,
+  Code2,
+  Database,
+  Flame,
+  GitBranch,
+  Bot,
+};
+
+const colorMap: Record<string, string> = {
+  Globe: "from-orange-500 to-red-500",
+  Code2: "from-cyan-400 to-blue-500",
+  Database: "from-green-500 to-emerald-500",
+  Flame: "from-amber-500 to-orange-600",
+  GitBranch: "from-purple-500 to-pink-500",
+  Bot: "from-emerald-400 to-cyan-500",
+};
 
 const Skills = () => {
   const { t } = useLanguage();
 
-  const skills = [
-    { name: "HTML5 & CSS3", icon: Globe, percentage: 100, color: "from-orange-500 to-red-500" },
-    { name: "JavaScript", icon: Code2, percentage: 80, color: "from-yellow-400 to-orange-500" },
-    { name: "React & TypeScript", icon: Code2, percentage: 75, color: "from-cyan-400 to-blue-500" },
-    { name: "Firebase", icon: Flame, percentage: 74, color: "from-amber-500 to-orange-600" },
-    { name: "Git & GitHub", icon: GitBranch, percentage: 100, color: "from-purple-500 to-pink-500" },
-    { name: "AI Automation", icon: Bot, percentage: 50, color: "from-emerald-400 to-cyan-500" },
-  ];
+  const { data: skills = [], isLoading } = useQuery({
+    queryKey: ["skills"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("skills")
+        .select("*")
+        .order("display_order");
+      if (error) throw error;
+      return data;
+    },
+  });
 
   return (
     <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
@@ -31,28 +54,35 @@ const Skills = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skills.map((skill) => {
-            const Icon = skill.icon;
-            return (
-              <div key={skill.name} className="group relative p-6 md:p-8 rounded-2xl glass hover:border-primary/30 transition-all duration-300">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${skill.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-foreground">{skill.name}</h3>
-                    <span className="text-sm font-bold text-primary">{skill.percentage}%</span>
-                  </div>
-                  <div className="relative h-2 bg-secondary rounded-full overflow-hidden">
-                    <div className={`absolute inset-y-0 left-0 bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${skill.percentage}%` }} />
+        {isLoading ? (
+          <div className="flex justify-center py-20">
+            <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skill) => {
+              const Icon = iconMap[skill.icon] || Code2;
+              const color = colorMap[skill.icon] || "from-cyan-400 to-blue-500";
+              return (
+                <div key={skill.id} className="group relative p-6 md:p-8 rounded-2xl glass hover:border-primary/30 transition-all duration-300">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative">
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                      <Icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-foreground">{skill.name}</h3>
+                      <span className="text-sm font-bold text-primary">{skill.percentage}%</span>
+                    </div>
+                    <div className="relative h-2 bg-secondary rounded-full overflow-hidden">
+                      <div className={`absolute inset-y-0 left-0 bg-gradient-to-r ${color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${skill.percentage}%` }} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
