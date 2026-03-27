@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LogOut, FolderKanban, Wrench, Briefcase, Settings } from "lucide-react";
+import { LogOut, FolderKanban, Wrench, Briefcase, Settings, MessageSquareQuote } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import AdminProjects from "@/components/admin/AdminProjects";
 import AdminSkills from "@/components/admin/AdminSkills";
 import AdminExperiences from "@/components/admin/AdminExperiences";
 import AdminSettings from "@/components/admin/AdminSettings";
+import AdminTestimonials from "@/components/admin/AdminTestimonials";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -22,10 +23,7 @@ const AdminDashboard = () => {
 
   const checkAdmin = async () => {
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
-      navigate("/admin");
-      return;
-    }
+    if (!session) { navigate("/admin"); return; }
 
     const { data: roles } = await supabase
       .from("user_roles")
@@ -61,7 +59,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <h1 className="text-lg font-bold font-display gradient-text">Admin Dashboard</h1>
@@ -72,7 +69,6 @@ const AdminDashboard = () => {
         </div>
       </header>
 
-      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="projects" className="space-y-6">
           <TabsList className="bg-secondary border border-border w-full justify-start overflow-x-auto">
@@ -88,6 +84,10 @@ const AdminDashboard = () => {
               <Briefcase className="w-4 h-4 mr-2" />
               Experiences
             </TabsTrigger>
+            <TabsTrigger value="testimonials" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">
+              <MessageSquareQuote className="w-4 h-4 mr-2" />
+              Testimonials
+            </TabsTrigger>
             <TabsTrigger value="settings" className="data-[state=active]:bg-primary/20 data-[state=active]:text-primary">
               <Settings className="w-4 h-4 mr-2" />
               Settings
@@ -97,6 +97,7 @@ const AdminDashboard = () => {
           <TabsContent value="projects"><AdminProjects /></TabsContent>
           <TabsContent value="skills"><AdminSkills /></TabsContent>
           <TabsContent value="experiences"><AdminExperiences /></TabsContent>
+          <TabsContent value="testimonials"><AdminTestimonials /></TabsContent>
           <TabsContent value="settings"><AdminSettings /></TabsContent>
         </Tabs>
       </div>
