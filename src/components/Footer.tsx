@@ -1,7 +1,11 @@
 import { useRef, useCallback } from "react";
-import { Github, Linkedin, Twitter, Heart, ArrowUp } from "lucide-react";
+import { Github, Linkedin, Twitter, Heart, ArrowUp, Globe } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+const iconMap: Record<string, any> = { Github, Linkedin, Twitter, Globe };
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -10,20 +14,23 @@ const Footer = () => {
   const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Secret gesture: double-tap then hold on the copyright year
+  const { data: socialLinks = [] } = useQuery({
+    queryKey: ["social_links"],
+    queryFn: async () => {
+      const { data } = await supabase.from("social_links").select("*").order("display_order");
+      return data || [];
+    },
+  });
+
   const handlePointerDown = useCallback(() => {
     tapCountRef.current += 1;
-
     if (tapTimerRef.current) clearTimeout(tapTimerRef.current);
-
     if (tapCountRef.current >= 2) {
-      // Double tap detected, now wait for hold (800ms)
       holdTimerRef.current = setTimeout(() => {
         navigate("/admin");
         tapCountRef.current = 0;
       }, 800);
     }
-
     tapTimerRef.current = setTimeout(() => {
       tapCountRef.current = 0;
     }, 500);
@@ -35,12 +42,6 @@ const Footer = () => {
       holdTimerRef.current = null;
     }
   }, []);
-
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam", label: "LinkedIn" },
-    { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
-  ];
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -55,10 +56,10 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground mt-1">{t("footer.role")}</p>
           </div>
           <div className="flex gap-3">
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
+            {socialLinks.map((social: any) => {
+              const Icon = iconMap[social.icon] || Globe;
               return (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all" aria-label={social.label}>
+                <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all" aria-label={social.platform}>
                   <Icon className="w-5 h-5" />
                 </a>
               );

@@ -185,6 +185,36 @@ export type Database = {
         }
         Relationships: []
       }
+      social_links: {
+        Row: {
+          created_at: string | null
+          display_order: number
+          icon: string
+          id: string
+          platform: string
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string | null
+          display_order?: number
+          icon?: string
+          id?: string
+          platform: string
+          updated_at?: string | null
+          url?: string
+        }
+        Update: {
+          created_at?: string | null
+          display_order?: number
+          icon?: string
+          id?: string
+          platform?: string
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
       testimonials: {
         Row: {
           avatar: string

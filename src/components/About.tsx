@@ -2,14 +2,24 @@ import { User, Briefcase, Users, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/banner.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const About = () => {
   const { t } = useLanguage();
 
+  const { data: about } = useQuery({
+    queryKey: ["about_section"],
+    queryFn: async () => {
+      const { data } = await supabase.from("about_section").select("*").limit(1).single();
+      return data;
+    },
+  });
+
   const stats = [
-    { icon: Briefcase, number: "2+", label: t("about.stat1") },
-    { icon: User, number: "50+", label: t("about.stat2") },
-    { icon: Users, number: "100+", label: t("about.stat3") },
+    { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: t("about.stat1") },
+    { icon: User, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2") },
+    { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: t("about.stat3") },
   ];
 
   return (
@@ -30,7 +40,7 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-md mx-auto lg:mx-0">
-              <img src={profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
+              <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             </div>
             <div className="absolute -bottom-6 -right-6 w-48 h-48 border-2 border-primary/30 rounded-2xl -z-10" />
@@ -42,9 +52,17 @@ const About = () => {
               <span className="gradient-text">{t("about.subtitle")}</span>
             </h3>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>{t("about.p1")}</p>
-              <p>{t("about.p2")}</p>
-              <p>{t("about.p3")}</p>
+              {about?.bio_text ? (
+                about.bio_text.split('\n').filter(Boolean).map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))
+              ) : (
+                <>
+                  <p>{t("about.p1")}</p>
+                  <p>{t("about.p2")}</p>
+                  <p>{t("about.p3")}</p>
+                </>
+              )}
             </div>
             <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
               {t("about.cta")}

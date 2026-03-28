@@ -1,21 +1,42 @@
-import { Github, Linkedin, Twitter, ArrowDown, Download, ArrowRight, Code2, Sparkles } from "lucide-react";
+import { Github, Linkedin, Twitter, ArrowDown, Download, ArrowRight, Code2, Sparkles, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/profile-photo.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+const iconMap: Record<string, any> = { Github, Linkedin, Twitter, Globe };
 
 const Hero = () => {
   const { t } = useLanguage();
 
-  const socialLinks = [
-    { icon: Github, href: "https://github.com/SahinShazi", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/sahinenam", label: "LinkedIn" },
-    { icon: Twitter, href: "https://x.com/Sahin_Tech_1", label: "Twitter" },
-  ];
+  const { data: settings } = useQuery({
+    queryKey: ["site_settings"],
+    queryFn: async () => {
+      const { data } = await supabase.from("site_settings").select("*").limit(1).single();
+      return data;
+    },
+  });
+
+  const { data: about } = useQuery({
+    queryKey: ["about_section"],
+    queryFn: async () => {
+      const { data } = await supabase.from("about_section").select("*").limit(1).single();
+      return data;
+    },
+  });
+
+  const { data: socialLinks = [] } = useQuery({
+    queryKey: ["social_links"],
+    queryFn: async () => {
+      const { data } = await supabase.from("social_links").select("*").order("display_order");
+      return data || [];
+    },
+  });
 
   return (
     <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-background">
-      {/* Background effects */}
       <div className="absolute inset-0 bg-grid" />
       <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
       <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-accent/20 rounded-full blur-[100px] animate-pulse-glow" />
@@ -33,17 +54,27 @@ const Hero = () => {
             </div>
 
             <h1 className="animate-fade-in-up-delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display leading-tight mb-6">
-              <span className="text-foreground">{t("hero.greeting")}</span>
+              <span className="text-foreground">{settings?.hero_title || t("hero.greeting")}</span>
               <br />
               <span className="gradient-text text-glow">{t("hero.name")}</span>
             </h1>
 
-            <div className="animate-fade-in-up-delay-2 flex items-center justify-center lg:justify-start gap-3 mb-6">
-              <Code2 className="w-6 h-6 text-primary" />
-              <span className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
-                {t("hero.role")}
-              </span>
-            </div>
+            {settings?.hero_subtitle && (
+              <div className="animate-fade-in-up-delay-2 flex items-center justify-center lg:justify-start gap-3 mb-6">
+                <Code2 className="w-6 h-6 text-primary" />
+                <span className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
+                  {settings.hero_subtitle}
+                </span>
+              </div>
+            )}
+            {!settings?.hero_subtitle && (
+              <div className="animate-fade-in-up-delay-2 flex items-center justify-center lg:justify-start gap-3 mb-6">
+                <Code2 className="w-6 h-6 text-primary" />
+                <span className="text-xl sm:text-2xl md:text-3xl font-semibold text-muted-foreground">
+                  {t("hero.role")}
+                </span>
+              </div>
+            )}
 
             <p className="animate-fade-in-up-delay-3 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed">
               {t("hero.description")}
@@ -65,10 +96,10 @@ const Hero = () => {
             </div>
 
             <div className="animate-fade-in-up-delay-3 flex gap-4 justify-center lg:justify-start">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
+              {socialLinks.map((social: any) => {
+                const Icon = iconMap[social.icon] || Globe;
                 return (
-                  <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer" className="group w-12 h-12 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110" aria-label={social.label}>
+                  <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="group w-12 h-12 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 hover:scale-110" aria-label={social.platform}>
                     <Icon className="w-5 h-5" />
                   </a>
                 );
@@ -82,19 +113,19 @@ const Hero = () => {
               <div className="absolute -inset-8 rounded-full border border-primary/10" />
               <div className="absolute -inset-12 rounded-full border border-primary/5" />
               <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
-                <img src={profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
+                <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
               </div>
               <div className="absolute -right-4 top-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg">
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium">{t("hero.yearsExp")}</span>
+                  <span className="text-sm font-medium">{about ? `${about.years_experience}+ ${t("hero.yearsExp").replace(/\d+\+?\s*/, '')}` : t("hero.yearsExp")}</span>
                 </div>
               </div>
               <div className="absolute -left-4 bottom-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg" style={{ animationDelay: '1s' }}>
                 <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-accent" />
-                  <span className="text-sm font-medium">{t("hero.projects")}</span>
+                  <span className="text-sm font-medium">{about ? `${about.projects_completed}+ ${t("hero.projects").replace(/\d+\+?\s*/, '')}` : t("hero.projects")}</span>
                 </div>
               </div>
             </div>
