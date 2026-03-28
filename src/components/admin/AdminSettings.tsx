@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Save, Plus, Trash2 } from "lucide-react";
+import ImageUpload from "./ImageUpload";
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -133,14 +134,8 @@ const AdminSettings = () => {
           <Input value={settings.hero_subtitle} onChange={(e) => setSettings({ ...settings, hero_subtitle: e.target.value })} className="bg-secondary/50 border-border" />
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <label className="text-sm font-medium text-foreground block mb-1">Logo Image URL</label>
-            <Input value={settings.logo_image} onChange={(e) => setSettings({ ...settings, logo_image: e.target.value })} className="bg-secondary/50 border-border" />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-foreground block mb-1">Favicon URL</label>
-            <Input value={settings.favicon} onChange={(e) => setSettings({ ...settings, favicon: e.target.value })} className="bg-secondary/50 border-border" />
-          </div>
+          <ImageUpload value={settings.logo_image} onChange={(url) => setSettings({ ...settings, logo_image: url })} label="Logo Image" folder="site" />
+          <ImageUpload value={settings.favicon} onChange={(url) => setSettings({ ...settings, favicon: url })} label="Favicon" folder="site" />
         </div>
         <Button onClick={saveSettings} className="gradient-primary text-primary-foreground"><Save className="w-4 h-4 mr-2" />Save Settings</Button>
       </div>
@@ -166,10 +161,7 @@ const AdminSettings = () => {
             <Input type="number" value={about.happy_clients} onChange={(e) => setAbout({ ...about, happy_clients: parseInt(e.target.value) || 0 })} className="bg-secondary/50 border-border" />
           </div>
         </div>
-        <div>
-          <label className="text-sm font-medium text-foreground block mb-1">Profile Image URL</label>
-          <Input value={about.profile_image} onChange={(e) => setAbout({ ...about, profile_image: e.target.value })} className="bg-secondary/50 border-border" />
-        </div>
+        <ImageUpload value={about.profile_image} onChange={(url) => setAbout({ ...about, profile_image: url })} label="Profile Image" folder="profile" />
         <Button onClick={saveAbout} className="gradient-primary text-primary-foreground"><Save className="w-4 h-4 mr-2" />Save About</Button>
       </div>
 
