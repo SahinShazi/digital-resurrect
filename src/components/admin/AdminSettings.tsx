@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Save } from "lucide-react";
+import { Save, Plus, Trash2 } from "lucide-react";
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -24,6 +24,7 @@ const AdminSettings = () => {
     happy_clients: 0,
     profile_image: "",
   });
+  const [socialLinks, setSocialLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
@@ -32,9 +33,10 @@ const AdminSettings = () => {
   }, []);
 
   const fetchData = async () => {
-    const [settingsRes, aboutRes] = await Promise.all([
+    const [settingsRes, aboutRes, socialRes] = await Promise.all([
       supabase.from("site_settings").select("*").limit(1).single(),
       supabase.from("about_section").select("*").limit(1).single(),
+      supabase.from("social_links").select("*").order("display_order"),
     ]);
     if (settingsRes.data) setSettings({
       ...settingsRes.data,
@@ -47,6 +49,7 @@ const AdminSettings = () => {
       ...aboutRes.data,
       profile_image: aboutRes.data.profile_image || "",
     });
+    if (socialRes.data) setSocialLinks(socialRes.data);
     setLoading(false);
   };
 
@@ -73,6 +76,39 @@ const AdminSettings = () => {
     }).eq("id", about.id);
     if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
     toast({ title: "About section saved!" });
+  };
+
+  const addSocialLink = async () => {
+    const { data, error } = await supabase.from("social_links").insert({
+      platform: "New Platform",
+      url: "https://",
+      icon: "Globe",
+      display_order: socialLinks.length,
+    }).select().single();
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    if (data) setSocialLinks([...socialLinks, data]);
+  };
+
+  const updateSocialLink = async (id: string, field: string, value: string) => {
+    setSocialLinks(socialLinks.map(l => l.id === id ? { ...l, [field]: value } : l));
+  };
+
+  const saveSocialLink = async (link: any) => {
+    const { error } = await supabase.from("social_links").update({
+      platform: link.platform,
+      url: link.url,
+      icon: link.icon,
+      display_order: link.display_order,
+    }).eq("id", link.id);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Social link saved!" });
+  };
+
+  const deleteSocialLink = async (id: string) => {
+    const { error } = await supabase.from("social_links").delete().eq("id", id);
+    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    setSocialLinks(socialLinks.filter(l => l.id !== id));
+    toast({ title: "Social link deleted!" });
   };
 
   if (loading) return <div className="text-center text-muted-foreground py-8">Loading...</div>;
@@ -135,6 +171,37 @@ const AdminSettings = () => {
           <Input value={about.profile_image} onChange={(e) => setAbout({ ...about, profile_image: e.target.value })} className="bg-secondary/50 border-border" />
         </div>
         <Button onClick={saveAbout} className="gradient-primary text-primary-foreground"><Save className="w-4 h-4 mr-2" />Save About</Button>
+      </div>
+
+      {/* Social Links */}
+      <div className="glass rounded-2xl p-6 border border-border space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold text-foreground">Social Links</h3>
+          <Button onClick={addSocialLink} size="sm" className="gradient-primary text-primary-foreground"><Plus className="w-4 h-4 mr-1" />Add</Button>
+        </div>
+        <p className="text-xs text-muted-foreground">Icon options: Github, Linkedin, Twitter, Globe</p>
+        {socialLinks.map((link) => (
+          <div key={link.id} className="flex flex-col sm:flex-row gap-3 p-4 rounded-xl bg-secondary/30 border border-border">
+            <div className="flex-1 grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs text-muted-foreground">Platform</label>
+                <Input value={link.platform} onChange={(e) => updateSocialLink(link.id, "platform", e.target.value)} className="bg-secondary/50 border-border" />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground">Icon</label>
+                <Input value={link.icon} onChange={(e) => updateSocialLink(link.id, "icon", e.target.value)} className="bg-secondary/50 border-border" />
+              </div>
+              <div className="col-span-2">
+                <label className="text-xs text-muted-foreground">URL</label>
+                <Input value={link.url} onChange={(e) => updateSocialLink(link.id, "url", e.target.value)} className="bg-secondary/50 border-border" />
+              </div>
+            </div>
+            <div className="flex sm:flex-col gap-2 justify-end">
+              <Button onClick={() => saveSocialLink(link)} size="sm" variant="outline" className="border-border"><Save className="w-4 h-4" /></Button>
+              <Button onClick={() => deleteSocialLink(link.id)} size="sm" variant="outline" className="border-destructive text-destructive hover:bg-destructive/10"><Trash2 className="w-4 h-4" /></Button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
