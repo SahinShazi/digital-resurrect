@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2, X, Save } from "lucide-react";
+import ImageUpload from "./ImageUpload";
 
 interface Project {
   id: string;
@@ -76,10 +77,7 @@ const AdminProjects = () => {
             <label className="text-sm font-medium text-foreground block mb-1">Title</label>
             <Input value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="bg-secondary/50 border-border" />
           </div>
-          <div>
-            <label className="text-sm font-medium text-foreground block mb-1">Image URL</label>
-            <Input value={editing.image || ""} onChange={(e) => setEditing({ ...editing, image: e.target.value })} className="bg-secondary/50 border-border" />
-          </div>
+          <ImageUpload value={editing.image || ""} onChange={(url) => setEditing({ ...editing, image: url })} label="Project Image" folder="projects" />
         </div>
         <div>
           <label className="text-sm font-medium text-foreground block mb-1">Description</label>
