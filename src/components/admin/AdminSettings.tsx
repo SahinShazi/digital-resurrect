@@ -4,8 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Save, Plus, Trash2 } from "lucide-react";
+import { Save, Plus, Trash2, Upload } from "lucide-react";
 import ImageUpload from "./ImageUpload";
+import { useRef } from "react";
+
+const ResumeUpload = ({ value, onChange }: { value: string; onChange: (url: string) => void }) => {
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast({ title: "Error", description: "File size must be under 10MB", variant: "destructive" });
+      return;
+    }
+    setUploading(true);
+    const ext = file.name.split(".").pop();
+    const fileName = `resume/${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("portfolio-assets").upload(fileName, file);
+    if (error) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+      setUploading(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("portfolio-assets").getPublicUrl(fileName);
+    onChange(urlData.publicUrl);
+    toast({ title: "Resume uploaded!" });
+    setUploading(false);
+  };
+
+  return (
+    <>
+      <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" onChange={handleUpload} className="hidden" />
+      <Button type="button" variant="outline" size="icon" onClick={() => fileRef.current?.click()} disabled={uploading} className="border-border flex-shrink-0">
+        {uploading ? <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4" />}
+      </Button>
+    </>
+  );
+};
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
