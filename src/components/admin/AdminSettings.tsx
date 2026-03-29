@@ -4,8 +4,46 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Save, Plus, Trash2 } from "lucide-react";
+import { Save, Plus, Trash2, Upload } from "lucide-react";
 import ImageUpload from "./ImageUpload";
+import { useRef } from "react";
+
+const ResumeUpload = ({ value, onChange }: { value: string; onChange: (url: string) => void }) => {
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast({ title: "Error", description: "File size must be under 10MB", variant: "destructive" });
+      return;
+    }
+    setUploading(true);
+    const ext = file.name.split(".").pop();
+    const fileName = `resume/${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("portfolio-assets").upload(fileName, file);
+    if (error) {
+      toast({ title: "Upload failed", description: error.message, variant: "destructive" });
+      setUploading(false);
+      return;
+    }
+    const { data: urlData } = supabase.storage.from("portfolio-assets").getPublicUrl(fileName);
+    onChange(urlData.publicUrl);
+    toast({ title: "Resume uploaded!" });
+    setUploading(false);
+  };
+
+  return (
+    <>
+      <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" onChange={handleUpload} className="hidden" />
+      <Button type="button" variant="outline" size="icon" onClick={() => fileRef.current?.click()} disabled={uploading} className="border-border flex-shrink-0">
+        {uploading ? <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" /> : <Upload className="w-4 h-4" />}
+      </Button>
+    </>
+  );
+};
 
 const AdminSettings = () => {
   const [settings, setSettings] = useState({
@@ -16,6 +54,7 @@ const AdminSettings = () => {
     hero_background_image: "",
     logo_image: "",
     favicon: "",
+    resume_url: "",
   });
   const [about, setAbout] = useState({
     id: "",
@@ -45,6 +84,7 @@ const AdminSettings = () => {
       hero_background_image: settingsRes.data.hero_background_image || "",
       logo_image: settingsRes.data.logo_image || "",
       favicon: settingsRes.data.favicon || "",
+      resume_url: (settingsRes.data as any).resume_url || "",
     });
     if (aboutRes.data) setAbout({
       ...aboutRes.data,
@@ -62,7 +102,8 @@ const AdminSettings = () => {
       hero_background_image: settings.hero_background_image || null,
       logo_image: settings.logo_image || null,
       favicon: settings.favicon || null,
-    }).eq("id", settings.id);
+      resume_url: settings.resume_url || null,
+    } as any).eq("id", settings.id);
     if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
     toast({ title: "Site settings saved!" });
   };
@@ -136,6 +177,14 @@ const AdminSettings = () => {
         <div className="grid sm:grid-cols-2 gap-4">
           <ImageUpload value={settings.logo_image} onChange={(url) => setSettings({ ...settings, logo_image: url })} label="Logo Image" folder="site" />
           <ImageUpload value={settings.favicon} onChange={(url) => setSettings({ ...settings, favicon: url })} label="Favicon" folder="site" />
+        </div>
+        <div>
+          <label className="text-sm font-medium text-foreground block mb-1">Resume/CV (PDF)</label>
+          <div className="flex gap-2">
+            <Input value={settings.resume_url} onChange={(e) => setSettings({ ...settings, resume_url: e.target.value })} placeholder="Resume URL or upload" className="bg-secondary/50 border-border flex-1" />
+            <ResumeUpload value={settings.resume_url} onChange={(url) => setSettings({ ...settings, resume_url: url })} />
+          </div>
+          {settings.resume_url && <p className="text-xs text-muted-foreground mt-1 truncate">Current: {settings.resume_url}</p>}
         </div>
         <Button onClick={saveSettings} className="gradient-primary text-primary-foreground"><Save className="w-4 h-4 mr-2" />Save Settings</Button>
       </div>
