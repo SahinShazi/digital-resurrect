@@ -7,7 +7,7 @@ const HomePage = () => {
   const { lang } = useLanguage();
 
   return (
-    <div className={`min-h-screen ${lang === "bn" ? "font-bangla" : ""}`}>
+    <div className={`min-h-screen flex flex-col ${lang === "bn" ? "font-bangla" : ""}`}>
       <Navbar />
       <main>
         <Hero />
