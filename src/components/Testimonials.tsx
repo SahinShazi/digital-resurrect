@@ -55,7 +55,13 @@ const Testimonials = () => {
                         </div>
                         <p className="text-muted-foreground mb-6 leading-relaxed flex-grow">"{testimonial.content}"</p>
                         <div className="flex items-center gap-4 pt-4 border-t border-border">
-                          <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-semibold">{testimonial.avatar}</div>
+                          {testimonial.avatar && (testimonial.avatar.startsWith("http") || testimonial.avatar.startsWith("/")) ? (
+                            <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-semibold">
+                              {testimonial.avatar || testimonial.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()}
+                            </div>
+                          )}
                           <div>
                             <p className="font-semibold text-foreground">{testimonial.name}</p>
                             <p className="text-sm text-muted-foreground">{testimonial.role}</p>

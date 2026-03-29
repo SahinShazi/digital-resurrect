@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, Pencil, Trash2, Save, X, Star } from "lucide-react";
+import ImageUpload from "./ImageUpload";
 
 interface Testimonial {
   id: string;
@@ -107,9 +108,8 @@ const AdminTestimonials = () => {
             <Textarea value={editing.content} onChange={(e) => setEditing({ ...editing, content: e.target.value })} className="bg-secondary/50 border-border" rows={3} />
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
-            <div>
-              <label className="text-sm font-medium text-foreground block mb-1">Avatar (initials)</label>
-              <Input value={editing.avatar} onChange={(e) => setEditing({ ...editing, avatar: e.target.value })} className="bg-secondary/50 border-border" placeholder="SJ" />
+            <div className="sm:col-span-3">
+              <ImageUpload value={editing.avatar} onChange={(url) => setEditing({ ...editing, avatar: url })} label="Client Photo (optional - initials used if empty)" folder="testimonials" />
             </div>
             <div>
               <label className="text-sm font-medium text-foreground block mb-1">Rating (1-5)</label>
@@ -131,7 +131,13 @@ const AdminTestimonials = () => {
         {testimonials.map((t) => (
           <div key={t.id} className="glass rounded-xl p-4 border border-border flex items-center justify-between gap-4">
             <div className="flex items-center gap-4 min-w-0">
-              <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-semibold text-sm flex-shrink-0">{t.avatar}</div>
+              {t.avatar && (t.avatar.startsWith("http") || t.avatar.startsWith("/")) ? (
+                <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+              ) : (
+                <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-semibold text-sm flex-shrink-0">
+                  {t.avatar || t.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()}
+                </div>
+              )}
               <div className="min-w-0">
                 <p className="font-semibold text-foreground truncate">{t.name}</p>
                 <p className="text-sm text-muted-foreground truncate">{t.role}</p>

@@ -88,7 +88,7 @@ const Hero = () => {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-2 border-border bg-card/50 hover:bg-card hover:border-primary/50 font-semibold px-8 py-6 rounded-xl transition-all duration-300">
-                <a href="/resume.pdf" download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
+                <a href={settings?.resume_url || "/resume.pdf"} download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
                   <Download className="w-5 h-5" />
                   {t("hero.resume")}
                 </a>
@@ -133,12 +133,6 @@ const Hero = () => {
         </div>
       </div>
 
-      <Link to="/about" className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-        <span className="text-xs font-medium">{t("hero.scroll")}</span>
-        <div className="w-6 h-10 rounded-full border-2 border-current flex items-start justify-center p-2">
-          <ArrowDown className="w-3 h-3 animate-bounce" />
-        </div>
-      </Link>
     </section>
   );
 };
