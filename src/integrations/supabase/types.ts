@@ -130,6 +130,7 @@ export type Database = {
           hero_title: string
           id: string
           logo_image: string | null
+          resume_url: string | null
           site_title: string
           updated_at: string | null
         }
@@ -140,6 +141,7 @@ export type Database = {
           hero_title?: string
           id?: string
           logo_image?: string | null
+          resume_url?: string | null
           site_title?: string
           updated_at?: string | null
         }
@@ -150,6 +152,7 @@ export type Database = {
           hero_title?: string
           id?: string
           logo_image?: string | null
+          resume_url?: string | null
           site_title?: string
           updated_at?: string | null
         }
