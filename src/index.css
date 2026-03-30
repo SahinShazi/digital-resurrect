@@ -198,6 +198,8 @@
   .animate-spin-slow {
     animation: spinSlow 12s linear infinite;
   }
+
+  .animate-shimmer {
     background: linear-gradient(
       90deg,
       transparent 0%,
