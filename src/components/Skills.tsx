@@ -3,23 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
-const iconMap: Record<string, LucideIcon> = {
-  Globe,
-  Code2,
-  Database,
-  Flame,
-  GitBranch,
-  Bot,
-};
-
-const colorMap: Record<string, string> = {
-  Globe: "from-orange-500 to-red-500",
-  Code2: "from-cyan-400 to-blue-500",
-  Database: "from-green-500 to-emerald-500",
-  Flame: "from-amber-500 to-orange-600",
-  GitBranch: "from-purple-500 to-pink-500",
-  Bot: "from-emerald-400 to-cyan-500",
-};
+const iconMap: Record<string, LucideIcon> = { Globe, Code2, Database, Flame, GitBranch, Bot };
 
 const Skills = () => {
   const { t } = useLanguage();
@@ -27,56 +11,40 @@ const Skills = () => {
   const { data: skills = [], isLoading } = useQuery({
     queryKey: ["skills"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("skills")
-        .select("*")
-        .order("display_order");
+      const { data, error } = await supabase.from("skills").select("*").order("display_order");
       if (error) throw error;
       return data;
     },
   });
 
   return (
-    <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-secondary/30" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[150px]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-primary/10 rounded-full mb-4">
-            {t("skills.badge")}
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-foreground mb-4">
-            {t("skills.heading")}
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            {t("skills.subtitle")}
-          </p>
+    <section id="skills" className="section-padding">
+      <div className="container-width">
+        <div className="text-center mb-12">
+          <p className="text-primary font-medium text-sm tracking-wide uppercase mb-2">{t("skills.badge")}</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">{t("skills.heading")}</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{t("skills.subtitle")}</p>
         </div>
 
         {isLoading ? (
-          <div className="flex justify-center py-20">
-            <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full" />
+          <div className="flex justify-center py-16">
+            <div className="animate-spin w-6 h-6 border-2 border-primary border-t-transparent rounded-full" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {skills.map((skill) => {
               const Icon = iconMap[skill.icon] || Code2;
-              const color = colorMap[skill.icon] || "from-cyan-400 to-blue-500";
               return (
-                <div key={skill.id} className="group relative p-6 md:p-8 rounded-2xl glass hover:border-primary/30 transition-all duration-300">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                      <Icon className="w-7 h-7 text-white" />
+                <div key={skill.id} className="border border-border rounded-xl p-5 hover:border-primary/30 transition-colors">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-primary" />
                     </div>
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-foreground">{skill.name}</h3>
-                      <span className="text-sm font-bold text-primary">{skill.percentage}%</span>
-                    </div>
-                    <div className="relative h-2 bg-secondary rounded-full overflow-hidden">
-                      <div className={`absolute inset-y-0 left-0 bg-gradient-to-r ${color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${skill.percentage}%` }} />
-                    </div>
+                    <h3 className="font-medium text-foreground">{skill.name}</h3>
+                    <span className="ml-auto text-sm font-medium text-primary">{skill.percentage}%</span>
+                  </div>
+                  <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                    <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${skill.percentage}%` }} />
                   </div>
                 </div>
               );

@@ -1,4 +1,4 @@
-import { User, Briefcase, Users, ArrowUpRight } from "lucide-react";
+import { Briefcase, FolderOpen, Users, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/banner.jpg";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -18,44 +18,28 @@ const About = () => {
 
   const stats = [
     { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: t("about.stat1") },
-    { icon: User, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2") },
+    { icon: FolderOpen, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2") },
     { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: t("about.stat3") },
   ];
 
   return (
-    <section id="about" className="relative py-24 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-grid opacity-50" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[150px]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 text-sm font-medium text-primary bg-primary/10 rounded-full mb-4">
-            {t("about.badge")}
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display text-foreground">
-            {t("about.heading")}
-          </h2>
+    <section id="about" className="section-padding bg-secondary/50">
+      <div className="container-width">
+        <div className="text-center mb-12">
+          <p className="text-primary font-medium text-sm tracking-wide uppercase mb-2">{t("about.badge")}</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">{t("about.heading")}</h2>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-md mx-auto lg:mx-0">
-              <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-            </div>
-            <div className="absolute -bottom-6 -right-6 w-48 h-48 border-2 border-primary/30 rounded-2xl -z-10" />
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/20 rounded-2xl blur-xl" />
+        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="relative rounded-xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0 border border-border shadow-md">
+            <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
           </div>
 
-          <div className="space-y-6">
-            <h3 className="text-2xl md:text-3xl font-bold font-display">
-              <span className="gradient-text">{t("about.subtitle")}</span>
-            </h3>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
+          <div className="space-y-5">
+            <h3 className="text-xl md:text-2xl font-bold text-primary">{t("about.subtitle")}</h3>
+            <div className="space-y-3 text-muted-foreground leading-relaxed">
               {about?.bio_text ? (
-                about.bio_text.split('\n').filter(Boolean).map((p: string, i: number) => (
-                  <p key={i}>{p}</p>
-                ))
+                about.bio_text.split('\n').filter(Boolean).map((p: string, i: number) => <p key={i}>{p}</p>)
               ) : (
                 <>
                   <p>{t("about.p1")}</p>
@@ -64,9 +48,9 @@ const About = () => {
                 </>
               )}
             </div>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
+            <Link to="/contact" className="inline-flex items-center gap-1.5 text-primary font-medium hover:underline">
               {t("about.cta")}
-              <ArrowUpRight className="w-5 h-5" />
+              <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -75,15 +59,12 @@ const About = () => {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="group relative p-8 rounded-2xl glass border-glow hover:scale-105 transition-all duration-300">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative flex flex-col items-center text-center">
-                  <div className="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center mb-4">
-                    <Icon className="w-7 h-7 text-primary-foreground" />
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold gradient-text mb-2">{stat.number}</div>
-                  <div className="text-muted-foreground font-medium">{stat.label}</div>
+              <div key={index} className="bg-background border border-border rounded-xl p-6 text-center shadow-sm">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                  <Icon className="w-5 h-5 text-primary" />
                 </div>
+                <div className="text-3xl font-bold text-foreground mb-1">{stat.number}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
               </div>
             );
           })}

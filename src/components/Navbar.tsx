@@ -11,10 +11,7 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -32,28 +29,23 @@ const Navbar = () => {
   const toggleLang = () => setLang(lang === "en" ? "bn" : "en");
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${lang === "bn" ? "font-bangla" : ""} ${
-        isScrolled
-          ? "bg-secondary/95 backdrop-blur-md shadow-lg border-b border-primary/20"
-          : "bg-secondary/80 backdrop-blur-sm border-b border-primary/10"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-3 group" onClick={() => setIsOpen(false)}>
-            <img src={logo} alt="Sahin Enam" className="h-8 md:h-10 w-auto transition-transform group-hover:scale-105" />
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${lang === "bn" ? "font-bangla" : ""} ${
+      isScrolled ? "bg-background/95 backdrop-blur-sm shadow-sm border-b border-border" : "bg-background border-b border-transparent"
+    }`}>
+      <div className="container-width">
+        <div className="flex justify-between items-center h-16">
+          <Link to="/" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
+            <img src={logo} alt="Sahin Enam" className="h-8 w-auto" />
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-secondary/50 ${
+                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   location.pathname === link.href
-                    ? "text-primary"
+                    ? "text-primary bg-primary/5"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -61,55 +53,37 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* Language Toggle */}
-            <button
-              onClick={toggleLang}
-              className="ml-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary rounded-lg hover:bg-secondary/50 transition-colors flex items-center gap-1.5"
-              aria-label="Toggle language"
-            >
+            <button onClick={toggleLang} className="ml-1 px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md transition-colors flex items-center gap-1" aria-label="Toggle language">
               <Languages className="w-4 h-4" />
               {lang === "en" ? "বাং" : "EN"}
             </button>
 
-            <Link
-              to="/contact"
-              className="ml-2 px-5 py-2 text-sm font-semibold gradient-primary text-primary-foreground rounded-lg hover:scale-105 transition-transform"
-            >
+            <Link to="/contact" className="ml-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
               {t("nav.hireMe")}
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={toggleLang}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-primary"
-              aria-label="Toggle language"
-            >
+          <div className="md:hidden flex items-center gap-1">
+            <button onClick={toggleLang} className="p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle language">
               <Languages className="w-5 h-5" />
             </button>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="w-6 h-6 text-foreground" /> : <Menu className="w-6 h-6 text-foreground" />}
+            <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-md text-foreground" aria-label="Toggle menu">
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      <div className={`md:hidden transition-all duration-300 overflow-hidden ${isOpen ? "max-h-[400px]" : "max-h-0"}`}>
-        <div className="px-4 py-4 space-y-2 glass-strong border-t border-border">
+      <div className={`md:hidden transition-all duration-200 overflow-hidden ${isOpen ? "max-h-[400px]" : "max-h-0"}`}>
+        <div className="px-4 py-3 space-y-1 bg-background border-t border-border">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
-              className={`block py-3 px-4 rounded-lg font-medium transition-colors ${
+              className={`block py-2 px-3 rounded-md text-sm font-medium transition-colors ${
                 location.pathname === link.href
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "text-primary bg-primary/5"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
               onClick={() => setIsOpen(false)}
             >
@@ -118,7 +92,7 @@ const Navbar = () => {
           ))}
           <Link
             to="/contact"
-            className="block py-3 px-4 mt-4 text-center font-semibold gradient-primary text-primary-foreground rounded-lg"
+            className="block py-2 px-3 mt-2 text-center text-sm font-medium bg-primary text-primary-foreground rounded-md"
             onClick={() => setIsOpen(false)}
           >
             {t("nav.hireMe")}

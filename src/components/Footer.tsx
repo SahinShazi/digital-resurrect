@@ -31,57 +31,45 @@ const Footer = () => {
         tapCountRef.current = 0;
       }, 800);
     }
-    tapTimerRef.current = setTimeout(() => {
-      tapCountRef.current = 0;
-    }, 500);
+    tapTimerRef.current = setTimeout(() => { tapCountRef.current = 0; }, 500);
   }, [navigate]);
 
   const handlePointerUp = useCallback(() => {
-    if (holdTimerRef.current) {
-      clearTimeout(holdTimerRef.current);
-      holdTimerRef.current = null;
-    }
+    if (holdTimerRef.current) { clearTimeout(holdTimerRef.current); holdTimerRef.current = null; }
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative py-12 border-t border-border mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="py-8 border-t border-border mt-auto">
+      <div className="container-width">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
-            <Link to="/" className="text-2xl font-bold font-display gradient-text">Sahin Enam</Link>
-            <p className="text-sm text-muted-foreground mt-1">{t("footer.role")}</p>
+            <Link to="/" className="text-lg font-bold text-foreground">Sahin Enam</Link>
+            <p className="text-xs text-muted-foreground mt-0.5">{t("footer.role")}</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {socialLinks.map((social: any) => {
               const Icon = iconMap[social.icon] || Globe;
               return (
-                <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl glass flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all" aria-label={social.platform}>
-                  <Icon className="w-5 h-5" />
+                <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label={social.platform}>
+                  <Icon className="w-3.5 h-3.5" />
                 </a>
               );
             })}
           </div>
-          <div className="text-center md:text-right text-sm text-muted-foreground">
+          <div className="text-center md:text-right text-xs text-muted-foreground">
             <p className="flex items-center justify-center md:justify-end gap-1">
-              {t("footer.madeWith")} <Heart className="w-4 h-4 text-red-500 fill-red-500" /> {t("footer.by")} <span className="font-semibold text-foreground">Sahin Enam</span>
+              {t("footer.madeWith")} <Heart className="w-3 h-3 text-red-500 fill-red-500" /> {t("footer.by")} <span className="font-medium text-foreground">Sahin Enam</span>
             </p>
-            <p
-              className="mt-1 select-none cursor-default"
-              onPointerDown={handlePointerDown}
-              onPointerUp={handlePointerUp}
-              onPointerLeave={handlePointerUp}
-            >
-              © <span>{new Date().getFullYear()}</span> {t("footer.rights")}
+            <p className="mt-0.5 select-none cursor-default" onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
+              © {new Date().getFullYear()} {t("footer.rights")}
             </p>
           </div>
         </div>
       </div>
-      <button onClick={scrollToTop} className="fixed bottom-8 right-8 w-12 h-12 rounded-xl gradient-primary text-primary-foreground flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-50" aria-label="Scroll to top">
-        <ArrowUp className="w-5 h-5" />
+      <button onClick={scrollToTop} className="fixed bottom-6 right-6 w-10 h-10 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors z-50" aria-label="Scroll to top">
+        <ArrowUp className="w-4 h-4" />
       </button>
     </footer>
   );
