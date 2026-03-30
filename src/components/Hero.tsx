@@ -108,26 +108,43 @@ const Hero = () => {
           </div>
 
           <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-            <div className="relative animate-fade-in-up">
-              <div className="absolute -inset-4 rounded-full border border-primary/20 animate-pulse-glow" />
-              <div className="absolute -inset-8 rounded-full border border-primary/10" />
-              <div className="absolute -inset-12 rounded-full border border-primary/5" />
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
-                <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+            <div className="relative animate-fade-in-up group">
+              {/* Rotating gradient ring */}
+              <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-primary via-accent to-primary opacity-30 blur-md animate-spin-slow" />
+              {/* Concentric rings */}
+              <div className="absolute -inset-5 rounded-full border border-primary/20 animate-pulse-glow" />
+              <div className="absolute -inset-10 rounded-full border border-primary/10" />
+              <div className="absolute -inset-16 rounded-full border border-dashed border-primary/5" />
+              
+              {/* Main photo container */}
+              <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[22rem] md:h-[22rem] rounded-full overflow-hidden border-[3px] border-primary/40 shadow-[0_0_60px_hsla(var(--primary),0.25)] group-hover:shadow-[0_0_80px_hsla(var(--primary),0.4)] transition-shadow duration-700">
+                <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-primary/5" />
               </div>
-              <div className="absolute -right-4 top-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg">
+
+              {/* Floating badge - top right */}
+              <div className="absolute -right-6 top-1/4 glass px-4 py-2.5 rounded-2xl animate-float shadow-lg border border-primary/20">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium">{about ? `${about.years_experience}+ ${t("hero.yearsExp").replace(/\d+\+?\s*/, '')}` : t("hero.yearsExp")}</span>
+                  <div className="w-8 h-8 rounded-lg gradient-primary flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-primary-foreground" />
+                  </div>
+                  <span className="text-sm font-semibold">{about ? `${about.years_experience}+ ${t("hero.yearsExp").replace(/\d+\+?\s*/, '')}` : t("hero.yearsExp")}</span>
                 </div>
               </div>
-              <div className="absolute -left-4 bottom-1/4 glass px-4 py-2 rounded-xl animate-float shadow-lg" style={{ animationDelay: '1s' }}>
+
+              {/* Floating badge - bottom left */}
+              <div className="absolute -left-6 bottom-1/4 glass px-4 py-2.5 rounded-2xl animate-float shadow-lg border border-accent/20" style={{ animationDelay: '1s' }}>
                 <div className="flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-accent" />
-                  <span className="text-sm font-medium">{about ? `${about.projects_completed}+ ${t("hero.projects").replace(/\d+\+?\s*/, '')}` : t("hero.projects")}</span>
+                  <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center">
+                    <Code2 className="w-4 h-4 text-accent" />
+                  </div>
+                  <span className="text-sm font-semibold">{about ? `${about.projects_completed}+ ${t("hero.projects").replace(/\d+\+?\s*/, '')}` : t("hero.projects")}</span>
                 </div>
               </div>
+
+              {/* Decorative dots */}
+              <div className="absolute -top-2 left-1/2 w-2 h-2 rounded-full bg-primary/60 animate-pulse" />
+              <div className="absolute -bottom-2 left-1/3 w-1.5 h-1.5 rounded-full bg-accent/60 animate-pulse" style={{ animationDelay: '0.5s' }} />
             </div>
           </div>
         </div>
