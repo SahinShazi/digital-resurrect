@@ -17,27 +17,27 @@ const About = () => {
   });
 
   const stats = [
-    { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: t("about.stat1") },
-    { icon: FolderOpen, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2") },
-    { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: t("about.stat3") },
+    { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: t("about.stat1"), color: "bg-primary" },
+    { icon: FolderOpen, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2"), color: "bg-accent" },
+    { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: t("about.stat3"), color: "bg-coral" },
   ];
 
   return (
-    <section id="about" className="section-padding bg-secondary/50">
+    <section id="about" className="section-padding">
       <div className="container-width">
-        <div className="text-center mb-12">
-          <p className="text-primary font-medium text-sm tracking-wide uppercase mb-2">{t("about.badge")}</p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">{t("about.heading")}</h2>
+        <div className="text-center mb-16">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("about.heading")}</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">{t("about.badge")}</p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          <div className="relative rounded-xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0 border border-border shadow-md">
+        <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+          <div className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-md mx-auto lg:mx-0 shadow-xl">
             <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
           </div>
 
-          <div className="space-y-5">
-            <h3 className="text-xl md:text-2xl font-bold text-primary">{t("about.subtitle")}</h3>
-            <div className="space-y-3 text-muted-foreground leading-relaxed">
+          <div className="space-y-6">
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-primary">{t("about.subtitle")}</h3>
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
               {about?.bio_text ? (
                 about.bio_text.split('\n').filter(Boolean).map((p: string, i: number) => <p key={i}>{p}</p>)
               ) : (
@@ -48,7 +48,7 @@ const About = () => {
                 </>
               )}
             </div>
-            <Link to="/contact" className="inline-flex items-center gap-1.5 text-primary font-medium hover:underline">
+            <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all duration-300">
               {t("about.cta")}
               <ArrowUpRight className="w-4 h-4" />
             </Link>
@@ -59,12 +59,12 @@ const About = () => {
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
-              <div key={index} className="bg-background border border-border rounded-xl p-6 text-center shadow-sm">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <Icon className="w-5 h-5 text-primary" />
+              <div key={index} className="bg-card border border-border rounded-2xl p-8 text-center hover:shadow-lg transition-shadow duration-300">
+                <div className={`w-14 h-14 rounded-full ${stat.color} flex items-center justify-center mx-auto mb-4`}>
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-3xl font-bold text-foreground mb-1">{stat.number}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-4xl font-bold text-foreground mb-1 font-display">{stat.number}</div>
+                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
               </div>
             );
           })}

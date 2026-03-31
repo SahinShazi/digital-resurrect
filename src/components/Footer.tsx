@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-import { Github, Linkedin, Twitter, Heart, ArrowUp, Globe } from "lucide-react";
+import { Github, Linkedin, Twitter, Heart, Globe } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
@@ -38,39 +38,33 @@ const Footer = () => {
     if (holdTimerRef.current) { clearTimeout(holdTimerRef.current); holdTimerRef.current = null; }
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
   return (
-    <footer className="py-8 border-t border-border mt-auto">
+    <footer className="py-10 border-t border-border mt-auto bg-card">
       <div className="container-width">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-center md:text-left">
-            <Link to="/" className="text-lg font-bold text-foreground">Sahin Enam</Link>
-            <p className="text-xs text-muted-foreground mt-0.5">{t("footer.role")}</p>
-          </div>
-          <div className="flex gap-2">
+        <div className="flex flex-col items-center gap-6">
+          <Link to="/" className="font-display text-2xl font-bold text-foreground italic">Sahin Enam</Link>
+
+          <div className="flex gap-3">
             {socialLinks.map((social: any) => {
               const Icon = iconMap[social.icon] || Globe;
               return (
-                <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" aria-label={social.platform}>
-                  <Icon className="w-3.5 h-3.5" />
+                <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border-2 border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label={social.platform}>
+                  <Icon className="w-4 h-4" />
                 </a>
               );
             })}
           </div>
-          <div className="text-center md:text-right text-xs text-muted-foreground">
-            <p className="flex items-center justify-center md:justify-end gap-1">
-              {t("footer.madeWith")} <Heart className="w-3 h-3 text-red-500 fill-red-500" /> {t("footer.by")} <span className="font-medium text-foreground">Sahin Enam</span>
+
+          <div className="text-center text-sm text-muted-foreground space-y-1">
+            <p className="flex items-center justify-center gap-1">
+              {t("footer.madeWith")} <Heart className="w-3.5 h-3.5 text-coral fill-coral" /> {t("footer.by")} <span className="font-medium text-foreground">Sahin Enam</span>
             </p>
-            <p className="mt-0.5 select-none cursor-default" onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
+            <p className="select-none cursor-default" onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
               © {new Date().getFullYear()} {t("footer.rights")}
             </p>
           </div>
         </div>
       </div>
-      <button onClick={scrollToTop} className="fixed bottom-6 right-6 w-10 h-10 rounded-lg bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors z-50" aria-label="Scroll to top">
-        <ArrowUp className="w-4 h-4" />
-      </button>
     </footer>
   );
 };

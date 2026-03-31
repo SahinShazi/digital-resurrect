@@ -17,11 +17,10 @@ const Testimonials = () => {
   });
 
   return (
-    <section className="section-padding bg-secondary/50">
+    <section className="section-padding">
       <div className="container-width">
-        <div className="text-center mb-12">
-          <p className="text-primary font-medium text-sm tracking-wide uppercase mb-2">{t("testimonials.badge")}</p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">{t("testimonials.heading")}</h2>
+        <div className="text-center mb-16">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("testimonials.heading")}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">{t("testimonials.subtitle")}</p>
         </div>
 
@@ -34,24 +33,24 @@ const Testimonials = () => {
             <CarouselContent className="-ml-4">
               {testimonials.map((testimonial) => (
                 <CarouselItem key={testimonial.id} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                  <div className="h-full bg-background border border-border rounded-xl p-5 flex flex-col">
-                    <Quote className="w-8 h-8 text-primary/20 mb-3" />
-                    <div className="flex gap-0.5 mb-3">
+                  <div className="h-full bg-card border border-border rounded-2xl p-6 flex flex-col relative">
+                    <Quote className="w-10 h-10 text-accent/40 mb-4" />
+                    <div className="flex gap-0.5 mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
+                        <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground mb-5 leading-relaxed flex-grow">"{testimonial.content}"</p>
-                    <div className="flex items-center gap-3 pt-3 border-t border-border">
+                    <p className="text-sm text-muted-foreground mb-6 leading-relaxed flex-grow italic">"{testimonial.content}"</p>
+                    <div className="flex items-center gap-3 pt-4 border-t border-border">
                       {testimonial.avatar && (testimonial.avatar.startsWith("http") || testimonial.avatar.startsWith("/")) ? (
-                        <img src={testimonial.avatar} alt={testimonial.name} className="w-9 h-9 rounded-full object-cover" />
+                        <img src={testimonial.avatar} alt={testimonial.name} className="w-11 h-11 rounded-full object-cover border-2 border-accent/30" />
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-semibold">
+                        <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
                           {testimonial.avatar || testimonial.name.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase()}
                         </div>
                       )}
                       <div>
-                        <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
+                        <p className="text-sm font-bold text-foreground">{testimonial.name}</p>
                         <p className="text-xs text-muted-foreground">{testimonial.role}</p>
                       </div>
                     </div>
@@ -59,9 +58,9 @@ const Testimonials = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-center gap-3 mt-6">
-              <CarouselPrevious className="relative inset-0 translate-x-0 translate-y-0" />
-              <CarouselNext className="relative inset-0 translate-x-0 translate-y-0" />
+            <div className="flex justify-center gap-3 mt-8">
+              <CarouselPrevious className="relative inset-0 translate-x-0 translate-y-0 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
+              <CarouselNext className="relative inset-0 translate-x-0 translate-y-0 bg-primary text-primary-foreground hover:bg-primary/90 border-none" />
             </div>
           </Carousel>
         )}
