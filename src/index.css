@@ -4,35 +4,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --background: 40 33% 96%;
+    --foreground: 200 30% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 40 30% 98%;
+    --card-foreground: 200 30% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 40 30% 98%;
+    --popover-foreground: 200 30% 15%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 174 52% 22%;
+    --primary-foreground: 40 33% 96%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 40 25% 91%;
+    --secondary-foreground: 200 30% 15%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 200 10% 45%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 38 80% 56%;
+    --accent-foreground: 200 30% 15%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 10 70% 50%;
+    --destructive-foreground: 40 33% 96%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --border: 40 20% 87%;
+    --input: 40 20% 87%;
+    --ring: 174 52% 22%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    --coral: 14 78% 57%;
   }
 }
 
@@ -51,7 +53,6 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     @apply tracking-tight;
   }
 }
@@ -63,5 +64,9 @@
 
   .container-width {
     @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
