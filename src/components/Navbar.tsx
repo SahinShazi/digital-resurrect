@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${lang === "bn" ? "font-bangla" : ""} ${
-      isScrolled ? "bg-background/95 backdrop-blur-sm shadow-sm border-b border-border" : "bg-background border-b border-transparent"
+      isScrolled ? "bg-background/95 backdrop-blur-sm shadow-sm" : "bg-background"
     }`}>
       <div className="container-width">
         <div className="flex justify-between items-center h-16">
@@ -43,9 +43,9 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-3 py-2 text-sm font-medium rounded-full transition-colors ${
                   location.pathname === link.href
-                    ? "text-primary bg-primary/5"
+                    ? "text-primary bg-primary/10 border border-primary/30"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -53,21 +53,21 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <button onClick={toggleLang} className="ml-1 px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-md transition-colors flex items-center gap-1" aria-label="Toggle language">
+            <button onClick={toggleLang} className="ml-1 px-3 py-2 text-sm text-muted-foreground hover:text-foreground rounded-full transition-colors flex items-center gap-1" aria-label="Toggle language">
               <Languages className="w-4 h-4" />
               {lang === "en" ? "বাং" : "EN"}
             </button>
 
-            <Link to="/contact" className="ml-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+            <Link to="/contact" className="ml-2 px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-full hover:bg-primary/90 transition-colors">
               {t("nav.hireMe")}
             </Link>
           </div>
 
           <div className="md:hidden flex items-center gap-1">
-            <button onClick={toggleLang} className="p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle language">
+            <button onClick={toggleLang} className="p-2 rounded-full text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle language">
               <Languages className="w-5 h-5" />
             </button>
-            <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-md text-foreground" aria-label="Toggle menu">
+            <button onClick={() => setIsOpen(!isOpen)} className="p-2 rounded-full text-foreground" aria-label="Toggle menu">
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
@@ -80,9 +80,9 @@ const Navbar = () => {
             <Link
               key={link.href}
               to={link.href}
-              className={`block py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+              className={`block py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                 location.pathname === link.href
-                  ? "text-primary bg-primary/5"
+                  ? "text-primary bg-primary/10"
                   : "text-muted-foreground hover:text-foreground"
               }`}
               onClick={() => setIsOpen(false)}
@@ -92,7 +92,7 @@ const Navbar = () => {
           ))}
           <Link
             to="/contact"
-            className="block py-2 px-3 mt-2 text-center text-sm font-medium bg-primary text-primary-foreground rounded-md"
+            className="block py-2 px-3 mt-2 text-center text-sm font-medium bg-primary text-primary-foreground rounded-full"
             onClick={() => setIsOpen(false)}
           >
             {t("nav.hireMe")}
