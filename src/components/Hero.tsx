@@ -1,7 +1,8 @@
-import { Github, Linkedin, Twitter, Download, ArrowRight, Globe, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Download, ArrowRight, Globe, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import profilePhoto from "@/assets/profile-photo.jpg";
+import profileCutout from "@/assets/profile-cutout.png";
+import brushStroke from "@/assets/brush-stroke.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -36,83 +37,132 @@ const Hero = () => {
   });
 
   return (
-    <section className="section-padding pt-28 md:pt-32 lg:pt-36">
-      <div className="container-width">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left - Text Content */}
-          <div className="order-2 lg:order-1 text-center lg:text-left">
-            <p className="text-accent font-semibold mb-4 text-sm tracking-widest uppercase">
-              {t("hero.available")}
-            </p>
+    <section className="relative min-h-screen overflow-hidden bg-background">
+      {/* Accent border frame */}
+      <div className="absolute inset-0 m-2 md:m-4 border-[3px] border-accent/40 rounded-3xl pointer-events-none z-10" />
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6">
-              {settings?.hero_title || t("hero.greeting")}{" "}
-              <span className="text-primary italic">{t("hero.name")}</span>
-            </h1>
+      <div className="relative z-20 container-width pt-24 md:pt-28 pb-12 min-h-screen flex flex-col justify-center">
+        {/* Mobile layout */}
+        <div className="lg:hidden text-center">
+          <h1 className="font-display text-4xl sm:text-5xl font-bold leading-[1.1] mb-4">
+            {settings?.hero_title || t("hero.greeting")}{" "}
+            <span className="text-primary italic">{t("hero.name")}</span>
+          </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground mb-3">
-              {settings?.hero_subtitle || t("hero.role")}
-            </p>
+          <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
+            {t("hero.description")}
+          </p>
 
-            <p className="text-muted-foreground max-w-lg mx-auto lg:mx-0 mb-8 leading-relaxed">
-              {t("hero.description")}
-            </p>
+          {/* Profile with brush stroke */}
+          <div className="relative mx-auto w-64 h-80 mb-8">
+            <img
+              src={brushStroke}
+              alt=""
+              className="absolute inset-0 w-full h-full object-contain z-0 scale-125"
+              width={800}
+              height={600}
+            />
+            <img
+              src={about?.profile_image || profileCutout}
+              alt="Sahin Enam"
+              className="relative z-10 w-full h-full object-contain object-bottom"
+            />
+          </div>
 
-            {/* Social Links */}
-            <div className="flex gap-3 justify-center lg:justify-start mb-8">
-              {socialLinks.map((social: any) => {
-                const Icon = iconMap[social.icon] || Globe;
-                return (
-                  <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full border-2 border-primary/20 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300" aria-label={social.platform}>
-                    <Icon className="w-4 h-4" />
-                  </a>
-                );
-              })}
+          {/* Stats */}
+          <div className="flex justify-center gap-8 mb-6">
+            <div>
+              <p className="text-3xl font-bold text-primary font-display">{about ? about.years_experience : 2}+</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Years<br/>Experience</p>
             </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-              <Button asChild size="lg" className="font-medium rounded-full px-8 bg-primary hover:bg-primary/90">
-                <Link to="/projects" className="flex items-center gap-2">
-                  {t("hero.viewProjects")}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-medium rounded-full px-8 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                <a href={settings?.resume_url || "/resume.pdf"} download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  {t("hero.resume")}
-                </a>
-              </Button>
+            <div>
+              <p className="text-3xl font-bold text-accent font-display">{about ? about.projects_completed : 50}+</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Projects<br/>Completed</p>
             </div>
           </div>
 
-          {/* Right - Profile Image */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <div className="relative">
-              {/* Decorative background shape */}
-              <div className="absolute -inset-4 bg-accent/30 rounded-[2rem] rotate-3" />
-              <div className="absolute -inset-4 bg-primary/10 rounded-[2rem] -rotate-2" />
-              
-              <div className="relative w-64 h-72 sm:w-72 sm:h-80 md:w-80 md:h-96 rounded-2xl overflow-hidden shadow-xl">
-                <img src={about?.profile_image || profilePhoto} alt="Sahin Enam" className="w-full h-full object-cover" />
-              </div>
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button asChild size="lg" className="font-medium rounded-full px-8 bg-primary hover:bg-primary/90">
+              <Link to="/projects" className="flex items-center gap-2">
+                {t("hero.viewProjects")}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="font-medium rounded-full px-8 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <a href={settings?.resume_url || "/resume.pdf"} download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
+                <Download className="w-4 h-4" />
+                {t("hero.resume")}
+              </a>
+            </Button>
+          </div>
+        </div>
 
-              {/* Stats Badge - Experience */}
-              <div className="absolute -bottom-4 -left-4 bg-card border-2 border-border rounded-2xl px-5 py-3 shadow-lg">
-                <p className="text-3xl font-bold text-primary font-display">{about ? about.years_experience : 2}+</p>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("hero.yearsExp").replace(/\d+\+?\s*/, '')}</p>
-              </div>
+        {/* Desktop layout - matching reference */}
+        <div className="hidden lg:block relative">
+          <div className="grid grid-cols-12 items-end min-h-[75vh]">
+            {/* Left - Big Title */}
+            <div className="col-span-5 pb-32 z-20">
+              <h1 className="font-display text-6xl xl:text-7xl font-bold leading-[1.05] mb-8">
+                {settings?.hero_title || t("hero.greeting")}{" "}
+                <span className="text-primary italic">{t("hero.name")}</span>
+              </h1>
 
-              {/* Stats Badge - Projects */}
-              <div className="absolute -top-4 -right-4 bg-card border-2 border-border rounded-2xl px-5 py-3 shadow-lg">
-                <p className="text-3xl font-bold text-accent font-display">{about ? about.projects_completed : 50}+</p>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("hero.projects").replace(/\d+\+?\s*/, '')}</p>
+              {/* Email link */}
+              <a href="mailto:sahinenam@gmail.com" className="text-primary font-semibold text-sm hover:underline">
+                sahinenam@gmail.com
+              </a>
+            </div>
+
+            {/* Center - Profile Image with brush stroke */}
+            <div className="col-span-4 relative z-10 flex justify-center">
+              <div className="relative w-full max-w-sm">
+                <img
+                  src={brushStroke}
+                  alt=""
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130%] h-[130%] object-contain z-0"
+                  width={800}
+                  height={600}
+                />
+                <img
+                  src={about?.profile_image || profileCutout}
+                  alt="Sahin Enam"
+                  className="relative z-10 w-full h-auto object-contain"
+                />
               </div>
+            </div>
+
+            {/* Right - Description */}
+            <div className="col-span-3 pb-48 z-20 pl-4">
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                {t("hero.description")}
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom stats row */}
+          <div className="absolute bottom-8 left-0 right-0 flex justify-between items-end z-20">
+            {/* Left - Years Experience */}
+            <div className="flex items-baseline gap-2">
+              <span className="text-5xl font-bold text-primary font-display">{about ? about.years_experience : 2}+</span>
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider leading-tight">Years<br/>Experience</span>
+            </div>
+
+            {/* Right - Role badge */}
+            <div className="text-right">
+              <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+                Frontend Developer
+              </p>
+              <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+                & Web Designer
+              </p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Background accent color strip at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-16 bg-accent/20 z-0" />
     </section>
   );
 };
