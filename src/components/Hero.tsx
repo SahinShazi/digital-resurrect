@@ -1,13 +1,19 @@
-import { Github, Linkedin, Twitter, Download, ArrowRight, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { ArrowUpRight, Github, Linkedin, Twitter, Globe, Code2, Database, Flame, GitBranch, Bot } from "lucide-react";
 import profileCutout from "@/assets/profile-cutout.png";
-import brushStroke from "@/assets/brush-stroke.png";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 const iconMap: Record<string, any> = { Github, Linkedin, Twitter, Globe };
+
+const techIcons = [
+  { icon: Code2, label: "Frontend" },
+  { icon: Database, label: "Backend" },
+  { icon: GitBranch, label: "Git" },
+  { icon: Bot, label: "AI" },
+  { icon: Flame, label: "Performance" },
+  { icon: Globe, label: "Web" },
+];
 
 const Hero = () => {
   const { t } = useLanguage();
@@ -37,133 +43,59 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative overflow-hidden bg-background">
-      {/* Accent border frame */}
-      <div className="absolute inset-2 md:inset-4 border-[3px] border-accent/30 rounded-3xl pointer-events-none z-10" />
+    <section className="relative bg-muted">
+      {/* Top bar */}
+      <div className="absolute top-0 left-0 right-0 z-20 flex justify-between items-start px-4 sm:px-8 pt-20 sm:pt-24">
+        <p className="text-xs sm:text-sm text-muted-foreground font-medium">
+          © Code by Sahin Enam
+        </p>
+        <p className="text-xs sm:text-sm text-muted-foreground text-right max-w-[200px] sm:max-w-xs leading-relaxed hidden sm:block">
+          {t("hero.description")}
+        </p>
+      </div>
 
-      {/* ===== MOBILE ===== */}
-      <div className="lg:hidden pt-20 pb-10 px-4">
-        <div className="text-center mb-6 pt-4">
-          <h1 className="font-display text-[2.5rem] leading-[1.1] font-bold mb-4">
-            {settings?.hero_title || t("hero.greeting")}{" "}
-            <span className="text-primary italic">{t("hero.name")}</span>
+      {/* Main hero image area */}
+      <div className="relative w-full min-h-[70vh] sm:min-h-[80vh] flex items-end justify-center overflow-hidden pt-20">
+        {/* Grayscale profile photo */}
+        <img
+          src={about?.profile_image || profileCutout}
+          alt="Sahin Enam"
+          className="relative z-10 w-[280px] sm:w-[350px] md:w-[420px] lg:w-[480px] object-contain object-bottom grayscale"
+        />
+
+        {/* Large overlapping title text */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+          <h1 className="font-display text-[3rem] sm:text-[5rem] md:text-[7rem] lg:text-[9rem] xl:text-[10rem] font-bold leading-[0.85] text-foreground/90 text-center whitespace-nowrap overflow-hidden">
+            {settings?.hero_title || "Creative Developer &"}
           </h1>
-          <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mx-auto">
-            {t("hero.description")}
-          </p>
         </div>
 
-        {/* Profile image with brush */}
-        <div className="relative mx-auto w-72 h-80 mb-6">
-          <img
-            src={brushStroke}
-            alt=""
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[140%] h-[140%] object-contain z-0 opacity-90"
-            width={800}
-            height={600}
-          />
-          <img
-            src={about?.profile_image || profileCutout}
-            alt="Sahin Enam"
-            className="relative z-10 w-full h-full object-contain object-bottom drop-shadow-xl"
-          />
-        </div>
-
-        {/* Stats */}
-        <div className="flex justify-center gap-10 mb-6">
-          <div className="text-center">
-            <p className="text-4xl font-bold text-primary font-display">{about ? about.years_experience : 2}+</p>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Years<br/>Experience</p>
-          </div>
-          <div className="text-center">
-            <p className="text-4xl font-bold text-accent font-display">{about ? about.projects_completed : 50}+</p>
-            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Projects<br/>Completed</p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="flex gap-3 justify-center">
-          <Button asChild size="lg" className="font-medium rounded-full px-6 bg-primary hover:bg-primary/90">
-            <Link to="/projects" className="flex items-center gap-2">
-              {t("hero.viewProjects")}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="font-medium rounded-full px-6 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-            <a href={settings?.resume_url || "/resume.pdf"} download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              {t("hero.resume")}
-            </a>
-          </Button>
+        {/* Arrow button overlay */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+          <a
+            href="#about"
+            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-2 border-foreground/20 flex items-center justify-center hover:bg-foreground hover:text-background transition-all duration-300"
+          >
+            <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6" />
+          </a>
         </div>
       </div>
 
-      {/* ===== DESKTOP ===== */}
-      <div className="hidden lg:flex items-end min-h-[calc(100vh-4rem)] pt-20 pb-8">
-        <div className="container-width w-full">
-          <div className="grid grid-cols-12 items-end gap-4">
-            {/* Left - Title */}
-            <div className="col-span-4 pb-24">
-              <h1 className="font-display text-6xl xl:text-7xl font-bold leading-[1.05] mb-6">
-                {settings?.hero_title || t("hero.greeting")}{" "}
-                <span className="text-primary italic">{t("hero.name")}</span>
-              </h1>
-              <a href="mailto:sahinenam@gmail.com" className="text-primary font-semibold text-sm hover:underline inline-flex items-center gap-1">
-                sahinenam@gmail.com
-              </a>
-            </div>
-
-            {/* Center - Profile */}
-            <div className="col-span-4 relative flex justify-center">
-              <div className="relative w-full max-w-md">
-                <img
-                  src={brushStroke}
-                  alt=""
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[45%] w-[150%] h-[150%] object-contain z-0 opacity-90"
-                  width={800}
-                  height={600}
-                />
-                <img
-                  src={about?.profile_image || profileCutout}
-                  alt="Sahin Enam"
-                  className="relative z-10 w-full h-auto object-contain drop-shadow-2xl"
-                />
+      {/* Tech icons bar */}
+      <div className="relative z-30 flex justify-center py-6">
+        <div className="flex items-center gap-1 bg-foreground rounded-full px-4 py-2.5 shadow-lg">
+          {techIcons.map((tech, i) => {
+            const Icon = tech.icon;
+            return (
+              <div
+                key={i}
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-background/70 hover:text-background hover:bg-background/10 transition-colors cursor-pointer"
+                title={tech.label}
+              >
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-            </div>
-
-            {/* Right - Description */}
-            <div className="col-span-4 pb-40 pl-6">
-              <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-                {t("hero.description")}
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom bar */}
-          <div className="flex justify-between items-end mt-4">
-            <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-bold text-primary font-display">{about ? about.years_experience : 2}+</span>
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider leading-tight">Years<br/>Experience</span>
-            </div>
-            <div className="flex gap-3">
-              <Button asChild size="lg" className="font-medium rounded-full px-8 bg-primary hover:bg-primary/90">
-                <Link to="/projects" className="flex items-center gap-2">
-                  {t("hero.viewProjects")}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="font-medium rounded-full px-8 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                <a href={settings?.resume_url || "/resume.pdf"} download="Sahin_Enam_Resume.pdf" className="flex items-center gap-2">
-                  <Download className="w-4 h-4" />
-                  {t("hero.resume")}
-                </a>
-              </Button>
-            </div>
-            <div className="text-right">
-              <p className="text-xs font-bold text-foreground uppercase tracking-wider">Frontend Developer</p>
-              <p className="text-xs font-bold text-foreground uppercase tracking-wider">& Web Designer</p>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
