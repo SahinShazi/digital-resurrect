@@ -27,10 +27,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background">
-      {/* Top accent strip */}
-      <div className="absolute top-0 left-0 right-0 h-2 bg-accent z-30" />
-
+    <section className="relative min-h-screen overflow-hidden bg-background pt-16">
       {/* Border frame */}
       <div className="absolute inset-0 m-3 md:m-5 border-2 border-accent/30 rounded-2xl pointer-events-none z-10" />
 
