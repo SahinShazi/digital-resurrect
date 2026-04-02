@@ -51,7 +51,7 @@ const Hero = () => {
             className="absolute inset-0 w-full h-full object-contain z-0 scale-[1.3]"
           />
           <img
-            src={about?.profile_image || profileCutout}
+            src={settings?.hero_background_image || profileCutout}
             alt="Sahin Enam"
             className="relative z-10 w-full h-full object-contain object-bottom"
           />
