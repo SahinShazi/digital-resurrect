@@ -27,10 +27,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-background">
-      {/* Top accent strip */}
-      <div className="absolute top-0 left-0 right-0 h-2 bg-accent z-30" />
-
+    <section className="relative min-h-screen overflow-hidden bg-background pt-16">
       {/* Border frame */}
       <div className="absolute inset-0 m-3 md:m-5 border-2 border-accent/30 rounded-2xl pointer-events-none z-10" />
 
@@ -54,7 +51,7 @@ const Hero = () => {
             className="absolute inset-0 w-full h-full object-contain z-0 scale-[1.3]"
           />
           <img
-            src={about?.profile_image || profileCutout}
+            src={settings?.hero_background_image || profileCutout}
             alt="Sahin Enam"
             className="relative z-10 w-full h-full object-contain object-bottom"
           />
@@ -112,7 +109,7 @@ const Hero = () => {
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[135%] h-[135%] object-contain z-0"
               />
               <img
-                src={about?.profile_image || profileCutout}
+                src={settings?.hero_background_image || profileCutout}
                 alt="Sahin Enam"
                 className="relative z-10 w-full h-auto object-contain"
               />
