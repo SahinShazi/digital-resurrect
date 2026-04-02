@@ -109,7 +109,7 @@ const Hero = () => {
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[135%] h-[135%] object-contain z-0"
               />
               <img
-                src={about?.profile_image || profileCutout}
+                src={settings?.hero_background_image || profileCutout}
                 alt="Sahin Enam"
                 className="relative z-10 w-full h-auto object-contain"
               />

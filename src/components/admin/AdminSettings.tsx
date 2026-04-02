@@ -211,7 +211,7 @@ const AdminSettings = () => {
             <Input type="number" value={about.happy_clients} onChange={(e) => setAbout({ ...about, happy_clients: parseInt(e.target.value) || 0 })} className="bg-secondary/50 border-border" />
           </div>
         </div>
-        <ImageUpload value={about.profile_image} onChange={(url) => setAbout({ ...about, profile_image: url })} label="Profile Image" folder="profile" />
+        <ImageUpload value={about.profile_image} onChange={(url) => setAbout({ ...about, profile_image: url })} label="About Section Image" folder="profile" />
         <Button onClick={saveAbout} className="gradient-primary text-primary-foreground"><Save className="w-4 h-4 mr-2" />Save About</Button>
       </div>
 
