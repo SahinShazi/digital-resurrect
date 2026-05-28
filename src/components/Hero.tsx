@@ -27,15 +27,15 @@ const Hero = () => {
         <img
           src={heroImage}
           alt="Sahin Enam"
-          className="w-full h-full object-cover object-top md:object-[center_top]"
+          className="w-full h-full object-cover object-[60%_20%] sm:object-[center_15%] lg:object-[right_top]"
         />
-        {/* Dark gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(200,30%,10%)] via-[hsl(200,30%,10%)]/85 to-[hsl(200,30%,10%)]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(200,30%,10%)]/80 via-transparent to-transparent" />
+        {/* Dark gradient overlay - desktop: left to right, mobile: bottom to top */}
+        <div className="absolute inset-0 hidden lg:block bg-gradient-to-r from-[hsl(200,30%,9%)] via-[hsl(200,30%,9%)]/85 to-[hsl(200,30%,9%)]/20" />
+        <div className="absolute inset-0 lg:hidden bg-gradient-to-t from-[hsl(200,30%,9%)] via-[hsl(200,30%,9%)]/75 to-[hsl(200,30%,9%)]/30" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-width min-h-screen flex items-center">
+      <div className="relative z-10 container-width min-h-screen flex items-end lg:items-center pb-16 lg:pb-0">
         <div className="max-w-xl pt-20">
           <p className="text-white/80 text-base sm:text-lg font-medium mb-3 tracking-wide">
             Hi there! I'm
