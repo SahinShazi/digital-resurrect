@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const TestimonialsPage = () => {
@@ -10,7 +11,7 @@ const TestimonialsPage = () => {
     <div className={`min-h-screen flex flex-col ${lang === "bn" ? "font-bangla" : ""}`}>
       <Navbar />
       <main className="pt-20 flex-grow">
-        <Testimonials />
+        <Reveal><Testimonials /></Reveal>
       </main>
       <Footer />
     </div>

@@ -35,8 +35,8 @@ const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-width min-h-screen flex items-end lg:items-center pb-16 lg:pb-0">
-        <div className="max-w-xl pt-20">
+      <div className="relative z-10 container-width min-h-screen flex items-end lg:items-center lg:justify-center pb-16 lg:pb-0">
+        <div className="max-w-xl pt-20 lg:text-center animate-fade-in">
           <p className="text-white/80 text-base sm:text-lg font-medium mb-3 tracking-wide">
             Hi there! I'm
           </p>
@@ -54,11 +54,11 @@ const Hero = () => {
             {t("hero.role")} &amp; Web Designer
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 lg:justify-center">
             <Button
               asChild
               size="lg"
-              className="rounded-none bg-white text-[hsl(200,30%,15%)] hover:bg-accent hover:text-white font-semibold uppercase tracking-wider px-8"
+              className="rounded-none bg-white text-[hsl(200,30%,15%)] hover:bg-accent hover:text-white font-semibold uppercase tracking-wider px-8 transition-transform hover:scale-105"
             >
               <Link to="/about">About Me</Link>
             </Button>
@@ -66,13 +66,14 @@ const Hero = () => {
               asChild
               size="lg"
               variant="outline"
-              className="rounded-none border-white/60 bg-transparent text-white hover:bg-white hover:text-[hsl(200,30%,15%)] font-semibold uppercase tracking-wider px-8"
+              className="rounded-none border-white/60 bg-transparent text-white hover:bg-white hover:text-[hsl(200,30%,15%)] font-semibold uppercase tracking-wider px-8 transition-transform hover:scale-105"
             >
               <Link to="/contact">Hire Me</Link>
             </Button>
           </div>
         </div>
       </div>
+
     </section>
   );
 };

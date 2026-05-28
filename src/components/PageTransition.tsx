@@ -7,15 +7,19 @@ const PageTransition = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setIsVisible(false);
-    const timer = setTimeout(() => setIsVisible(true), 50);
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+    const timer = setTimeout(() => setIsVisible(true), 40);
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
   return (
     <div
-      className={`transition-opacity duration-500 ease-out ${
-        isVisible ? "opacity-100" : "opacity-0"
-      }`}
+      className="transition-all duration-700 ease-out"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "none" : "translateY(24px) scale(0.99)",
+        willChange: "opacity, transform",
+      }}
     >
       {children}
     </div>

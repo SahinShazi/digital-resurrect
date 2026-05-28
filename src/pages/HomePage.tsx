@@ -6,6 +6,7 @@ import Projects from "@/components/Projects";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Reveal from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const HomePage = () => {
@@ -16,11 +17,11 @@ const HomePage = () => {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Testimonials />
-        <Contact />
+        <Reveal><About /></Reveal>
+        <Reveal><Skills /></Reveal>
+        <Reveal><Projects /></Reveal>
+        <Reveal><Testimonials /></Reveal>
+        <Reveal><Contact /></Reveal>
       </main>
       <Footer />
     </div>
