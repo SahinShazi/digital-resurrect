@@ -41,16 +41,16 @@ const Hero = () => {
             Hi there! I'm
           </p>
 
-          <h1 className="font-display font-bold leading-[1.05] mb-4 text-white text-5xl sm:text-6xl md:text-7xl">
+          <h1 className="font-sans font-extrabold leading-[0.95] mb-4 text-white">
             {parts.map((word, i) => (
-              <span key={i} className="inline-block mr-3">
-                <span className="text-accent">{word.charAt(0)}</span>
-                {word.slice(1)}
+              <span key={i} className="inline-block mr-4">
+                <span className="text-accent text-6xl sm:text-7xl md:text-8xl">{word.charAt(0)}</span>
+                <span className="text-5xl sm:text-6xl md:text-7xl">{word.slice(1)}</span>
               </span>
             ))}
           </h1>
 
-          <p className="text-white font-semibold text-lg sm:text-xl md:text-2xl mb-8 tracking-wide">
+          <p className="text-white font-bold text-lg sm:text-xl md:text-2xl mb-8 tracking-wide">
             {t("hero.role")} &amp; Web Designer
           </p>
 
