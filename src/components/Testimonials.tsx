@@ -1,12 +1,9 @@
 import { Star, Quote } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 
 const Testimonials = () => {
-  const { t } = useLanguage();
-
   const { data: testimonials = [], isLoading } = useQuery({
     queryKey: ["testimonials"],
     queryFn: async () => {
@@ -20,8 +17,8 @@ const Testimonials = () => {
     <section className="section-padding">
       <div className="container-width">
         <div className="text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("testimonials.heading")}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t("testimonials.subtitle")}</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">What Clients Say</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">Don't just take my word for it</p>
         </div>
 
         {isLoading ? (

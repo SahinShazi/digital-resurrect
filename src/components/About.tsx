@@ -1,13 +1,10 @@
 import { Briefcase, FolderOpen, Users, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import profilePhoto from "@/assets/banner.jpg";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 const About = () => {
-  const { t } = useLanguage();
-
   const { data: about } = useQuery({
     queryKey: ["about_section"],
     queryFn: async () => {
@@ -17,17 +14,17 @@ const About = () => {
   });
 
   const stats = [
-    { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: t("about.stat1"), color: "bg-primary" },
-    { icon: FolderOpen, number: about ? `${about.projects_completed}+` : "50+", label: t("about.stat2"), color: "bg-accent" },
-    { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: t("about.stat3"), color: "bg-coral" },
+    { icon: Briefcase, number: about ? `${about.years_experience}+` : "2+", label: "Years Experience", color: "bg-primary" },
+    { icon: FolderOpen, number: about ? `${about.projects_completed}+` : "50+", label: "Projects Completed", color: "bg-accent" },
+    { icon: Users, number: about ? `${about.happy_clients}+` : "100+", label: "Happy Clients", color: "bg-primary" },
   ];
 
   return (
     <section id="about" className="section-padding">
       <div className="container-width">
         <div className="text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("about.heading")}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t("about.badge")}</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">Get to know me better</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">About Me</p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
@@ -36,20 +33,20 @@ const About = () => {
           </div>
 
           <div className="space-y-6">
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-primary">{t("about.subtitle")}</h3>
+            <h3 className="font-display text-2xl md:text-3xl font-bold text-primary">Professional Web Developer</h3>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               {about?.bio_text ? (
                 about.bio_text.split('\n').filter(Boolean).map((p: string, i: number) => <p key={i}>{p}</p>)
               ) : (
                 <>
-                  <p>{t("about.p1")}</p>
-                  <p>{t("about.p2")}</p>
-                  <p>{t("about.p3")}</p>
+                  <p>Hello! I'm Sahin Enam, a passionate Full Stack Web Developer with experience creating digital solutions that make a difference. I specialize in building scalable web applications using modern technologies like React, Node.js, and MongoDB.</p>
+                  <p>My journey in web development started with a curiosity about how websites work, and it has evolved into a career where I get to solve complex problems and create user-friendly experiences every day.</p>
+                  <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge with the developer community.</p>
                 </>
               )}
             </div>
             <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all duration-300">
-              {t("about.cta")}
+              Let's work together
               <ArrowUpRight className="w-4 h-4" />
             </Link>
           </div>
@@ -61,7 +58,7 @@ const About = () => {
             return (
               <div key={index} className="bg-card border border-border rounded-2xl p-8 text-center hover:shadow-lg transition-shadow duration-300">
                 <div className={`w-14 h-14 rounded-full ${stat.color} flex items-center justify-center mx-auto mb-4`}>
-                  <Icon className="w-6 h-6 text-white" />
+                  <Icon className="w-6 h-6 text-primary-foreground" />
                 </div>
                 <div className="text-4xl font-bold text-foreground mb-1 font-display">{stat.number}</div>
                 <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>

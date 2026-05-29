@@ -7,13 +7,10 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const HomePage = () => {
-  const { lang } = useLanguage();
-
   return (
-    <div className={`min-h-screen flex flex-col ${lang === "bn" ? "font-bangla" : ""}`}>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow">
         <Hero />

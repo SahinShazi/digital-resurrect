@@ -1,15 +1,12 @@
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Reveal from "@/components/Reveal";
 
-const cardColors = ["bg-accent", "bg-primary", "bg-coral", "bg-accent"];
+const cardColors = ["bg-primary", "bg-accent"];
 
 const Projects = () => {
-  const { t } = useLanguage();
-
   const { data: projects = [], isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
@@ -24,11 +21,11 @@ const Projects = () => {
       <div className="container-width">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-16">
           <div>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3">{t("projects.heading")}</h2>
-            <p className="text-muted-foreground max-w-xl">{t("projects.subtitle")}</p>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">Featured Projects</h2>
+            <p className="text-muted-foreground max-w-xl">Some of my recent work that I'm proud of</p>
           </div>
           <Link to="/projects" className="text-primary font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all italic">
-            {t("projects.viewAll")} <ArrowUpRight className="w-4 h-4" />
+            View All on GitHub <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -41,12 +38,12 @@ const Projects = () => {
             {projects.map((project, index) => (
               <Reveal key={project.id} delay={index * 100}>
               <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-background">
-                <div className={`${cardColors[index % 4]} p-6 relative overflow-hidden h-48`}>
+                <div className={`${cardColors[index % 2]} p-6 relative overflow-hidden h-48`}>
                   {project.image ? (
                     <img src={project.image} alt={project.title} className="w-full h-full object-cover absolute inset-0 rounded-lg mx-auto my-auto scale-90 shadow-lg" />
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      <span className="text-white/80 font-display text-2xl font-bold">{project.title}</span>
+                      <span className="text-primary-foreground/90 font-display text-2xl font-bold">{project.title}</span>
                     </div>
                   )}
                 </div>
@@ -69,7 +66,7 @@ const Projects = () => {
                   <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {project.technologies.map((tech, i) => (
-                      <span key={i} className="px-2.5 py-1 text-xs bg-secondary text-muted-foreground rounded-full font-medium">{tech}</span>
+                      <span key={i} className="px-2.5 py-1 text-xs bg-secondary text-secondary-foreground rounded-full font-medium">{tech}</span>
                     ))}
                   </div>
                 </div>
