@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import Reveal from "@/components/Reveal";
 
 const cardColors = ["bg-accent", "bg-primary", "bg-coral", "bg-accent"];
 
@@ -38,7 +39,8 @@ const Projects = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
-              <div key={project.id} className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-background">
+              <Reveal key={project.id} delay={index * 100}>
+              <div className="group rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-background">
                 <div className={`${cardColors[index % 4]} p-6 relative overflow-hidden h-48`}>
                   {project.image ? (
                     <img src={project.image} alt={project.title} className="w-full h-full object-cover absolute inset-0 rounded-lg mx-auto my-auto scale-90 shadow-lg" />
@@ -72,6 +74,7 @@ const Projects = () => {
                   </div>
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         )}

@@ -61,6 +61,7 @@ const Experience = () => {
                   <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{exp.description}</p>
                 </div>
               </div>
+              </Reveal>
             ))}
           </div>
         )}
