@@ -2,6 +2,7 @@ import { Code2, Database, Flame, GitBranch, Bot, Globe, LucideIcon } from "lucid
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import Reveal from "@/components/Reveal";
 
 const iconMap: Record<string, LucideIcon> = { Globe, Code2, Database, Flame, GitBranch, Bot };
 
@@ -31,10 +32,11 @@ const Skills = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {skills.map((skill) => {
+            {skills.map((skill, index) => {
               const Icon = iconMap[skill.icon] || Code2;
               return (
-                <div key={skill.id} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/15 transition-colors duration-300">
+                <Reveal key={skill.id} delay={index * 80}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/15 transition-colors duration-300">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
                       <Icon className="w-5 h-5 text-accent-foreground" />
@@ -48,6 +50,7 @@ const Skills = () => {
                     <div className="h-full bg-accent rounded-full transition-all duration-1000" style={{ width: `${skill.percentage}%` }} />
                   </div>
                 </div>
+                </Reveal>
               );
             })}
           </div>
