@@ -2,6 +2,7 @@ import { Calendar, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
+import Reveal from "@/components/Reveal";
 
 const dotColors = ["bg-primary", "bg-coral", "bg-accent"];
 
@@ -35,7 +36,8 @@ const Experience = () => {
             <div className="absolute left-1/2 top-0 bottom-0 w-px border-l-2 border-dashed border-border hidden md:block" />
 
             {experiences.map((exp, index) => (
-              <div key={exp.id} className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-16 last:mb-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <Reveal key={exp.id} delay={index * 100} direction={index % 2 === 0 ? "right" : "left"}>
+              <div className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-16 last:mb-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                 {/* Left / Right content */}
                 <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <h4 className="font-bold text-foreground text-lg">{exp.company}</h4>
