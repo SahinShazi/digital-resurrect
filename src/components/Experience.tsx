@@ -1,14 +1,11 @@
 import { Calendar, MapPin } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import Reveal from "@/components/Reveal";
 
-const dotColors = ["bg-primary", "bg-coral", "bg-accent"];
+const dotColors = ["bg-primary", "bg-accent"];
 
 const Experience = () => {
-  const { t } = useLanguage();
-
   const { data: experiences = [], isLoading } = useQuery({
     queryKey: ["experiences"],
     queryFn: async () => {
@@ -22,8 +19,8 @@ const Experience = () => {
     <section id="experience" className="section-padding">
       <div className="container-width">
         <div className="text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("experience.heading")}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">{t("experience.subtitle")}</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-foreground">My Professional Journey</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">A timeline of my career growth and achievements</p>
         </div>
 
         {isLoading ? (
@@ -38,7 +35,6 @@ const Experience = () => {
             {experiences.map((exp, index) => (
               <Reveal key={exp.id} delay={index * 100} direction={index % 2 === 0 ? "right" : "left"}>
               <div className={`relative flex flex-col md:flex-row items-center gap-6 md:gap-12 mb-16 last:mb-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                {/* Left / Right content */}
                 <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <h4 className="font-bold text-foreground text-lg">{exp.company}</h4>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1 justify-center md:justify-start">
@@ -52,10 +48,8 @@ const Experience = () => {
                   </div>
                 </div>
 
-                {/* Center dot */}
-                <div className={`w-5 h-5 rounded-full ${dotColors[index % 3]} border-4 border-background shadow-md z-10 flex-shrink-0`} />
+                <div className={`w-5 h-5 rounded-full ${dotColors[index % 2]} border-4 border-background shadow-md z-10 flex-shrink-0`} />
 
-                {/* Right / Left content */}
                 <div className="flex-1">
                   <h3 className="font-display text-xl font-bold text-foreground">{exp.title}</h3>
                   <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{exp.description}</p>

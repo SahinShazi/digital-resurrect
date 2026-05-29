@@ -2,39 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Unified design tokens — two-font system (Playfair Display + Inter),
+ * cream / dark-teal / golden palette used consistently across the site.
+ */
 @layer base {
   :root {
-    --background: 40 33% 96%;
-    --foreground: 200 30% 15%;
+    /* Surfaces */
+    --background: 38 40% 95%;        /* #FAF6F0 cream */
+    --foreground: 192 32% 14%;       /* #1A2A2E deep ink */
 
-    --card: 40 30% 98%;
-    --card-foreground: 200 30% 15%;
+    --card: 36 38% 92%;              /* warm cream surface */
+    --card-foreground: 192 32% 14%;
 
-    --popover: 40 30% 98%;
-    --popover-foreground: 200 30% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 192 32% 14%;
 
-    --primary: 174 52% 22%;
-    --primary-foreground: 40 33% 96%;
+    /* Brand */
+    --primary: 178 54% 22%;          /* #1A5653 dark teal */
+    --primary-foreground: 38 40% 96%;
 
-    --secondary: 40 25% 91%;
-    --secondary-foreground: 200 30% 15%;
+    --secondary: 38 30% 88%;
+    --secondary-foreground: 192 32% 14%;
 
-    --muted: 40 20% 92%;
-    --muted-foreground: 200 10% 45%;
+    --muted: 38 24% 90%;
+    --muted-foreground: 192 12% 38%; /* #5C6B6E */
 
-    --accent: 38 80% 56%;
-    --accent-foreground: 200 30% 15%;
+    --accent: 38 80% 56%;            /* #E8A838 golden */
+    --accent-foreground: 192 32% 14%;
 
-    --destructive: 10 70% 50%;
-    --destructive-foreground: 40 33% 96%;
+    --destructive: 6 65% 47%;        /* #C0392B */
+    --destructive-foreground: 38 40% 96%;
 
-    --border: 40 20% 87%;
-    --input: 40 20% 87%;
-    --ring: 174 52% 22%;
+    --border: 38 26% 82%;            /* #E5DCC9 */
+    --input: 38 26% 82%;
+    --ring: 178 54% 22%;
 
     --radius: 0.75rem;
 
-    --coral: 14 78% 57%;
+    /* Legacy token kept for backwards compat — mapped to accent so coral
+       references degrade to the brand's golden highlight. */
+    --coral: 38 80% 56%;
   }
 }
 
@@ -54,6 +62,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 

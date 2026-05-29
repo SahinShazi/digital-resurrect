@@ -62,7 +62,6 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
-        bangla: ['Hind Siliguri', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

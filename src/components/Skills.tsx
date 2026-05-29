@@ -1,5 +1,4 @@
 import { Code2, Database, Flame, GitBranch, Bot, Globe, LucideIcon } from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import Reveal from "@/components/Reveal";
@@ -7,8 +6,6 @@ import Reveal from "@/components/Reveal";
 const iconMap: Record<string, LucideIcon> = { Globe, Code2, Database, Flame, GitBranch, Bot };
 
 const Skills = () => {
-  const { t } = useLanguage();
-
   const { data: skills = [], isLoading } = useQuery({
     queryKey: ["skills"],
     queryFn: async () => {
@@ -22,8 +19,8 @@ const Skills = () => {
     <section id="skills" className="section-padding bg-primary text-primary-foreground">
       <div className="container-width">
         <div className="text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{t("skills.heading")}</h2>
-          <p className="text-primary-foreground/70 max-w-2xl mx-auto">{t("skills.subtitle")}</p>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-primary-foreground">Technical Expertise</h2>
+          <p className="text-primary-foreground/70 max-w-2xl mx-auto">Technologies I use to bring ideas to life</p>
         </div>
 
         {isLoading ? (
@@ -36,7 +33,7 @@ const Skills = () => {
               const Icon = iconMap[skill.icon] || Code2;
               return (
                 <Reveal key={skill.id} delay={index * 80}>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/15 transition-colors duration-300">
+                <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-primary-foreground/15 transition-colors duration-300">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center">
                       <Icon className="w-5 h-5 text-accent-foreground" />
@@ -46,7 +43,7 @@ const Skills = () => {
                       <span className="text-sm text-primary-foreground/60">{skill.percentage}%</span>
                     </div>
                   </div>
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2 bg-primary-foreground/10 rounded-full overflow-hidden">
                     <div className="h-full bg-accent rounded-full transition-all duration-1000" style={{ width: `${skill.percentage}%` }} />
                   </div>
                 </div>

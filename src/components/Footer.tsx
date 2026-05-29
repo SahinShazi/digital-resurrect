@@ -1,14 +1,12 @@
 import { useRef, useCallback } from "react";
 import { Github, Linkedin, Twitter, Heart, Globe } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 const iconMap: Record<string, any> = { Github, Linkedin, Twitter, Globe };
 
 const Footer = () => {
-  const { t } = useLanguage();
   const navigate = useNavigate();
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -57,10 +55,10 @@ const Footer = () => {
 
           <div className="text-center text-sm text-muted-foreground space-y-1">
             <p className="flex items-center justify-center gap-1">
-              {t("footer.madeWith")} <Heart className="w-3.5 h-3.5 text-coral fill-coral" /> {t("footer.by")} <span className="font-medium text-foreground">Sahin Enam</span>
+              Made with <Heart className="w-3.5 h-3.5 text-accent fill-accent" /> by <span className="font-medium text-foreground">Sahin Enam</span>
             </p>
             <p className="select-none cursor-default" onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} onPointerLeave={handlePointerUp}>
-              © {new Date().getFullYear()} {t("footer.rights")}
+              © {new Date().getFullYear()} All rights reserved.
             </p>
           </div>
         </div>
